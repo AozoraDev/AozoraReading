@@ -1,4 +1,4 @@
-# How It Works
+# How It Works?
 
 Aozora Reading uses AI to organize novel content so you can quickly grasp character relationships, world-building, and plot threads before and during reading.
 
