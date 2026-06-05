@@ -1,0 +1,122 @@
+{
+  "nav": {
+    "home": "Home",
+    "library": "Library",
+    "favorites": "Favorites",
+    "dashboard": "Dashboard",
+    "login": "Login",
+    "logout": "Sign out",
+    "userMenu": "User menu",
+    "mainNav": "Main navigation",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "locale": {
+    "label": "Language",
+    "switchTo": "Switch to {locale}",
+    "en": "EN",
+    "zh": "中文"
+  },
+  "hero": {
+    "titleHighlight": "Smarter",
+    "titleRest": " novel reading",
+    "description": "AI automatically generates character relationship maps, world-building encyclopedias, and work summaries to make reading easier and understanding deeper.",
+    "exploreLibrary": "Explore Library",
+    "howItWorks": "How it works"
+  },
+  "bookCard": {
+    "startReading": "Start Reading",
+    "favorite": "Add to favorites"
+  },
+  "library": {
+    "searchPlaceholder": "Search books…"
+  },
+  "startReading": {
+    "title": "Ready to discover your next great story?",
+    "description": "Discover intelligently organized novel content, quickly understand character relationships, world settings, and plot threads, and enjoy a more relaxed reading experience.",
+    "signup": "Sign up free"
+  },
+  "footer": {
+    "copyright": "© 2026 Aozora Reading. Better Reading Experience, Reimagined by AI.",
+    "github": "GitHub"
+  },
+  "auth": {
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "emailPlaceholder": "name@example.com",
+    "passwordPlaceholder": "Enter your password",
+    "confirmPasswordPlaceholder": "Re-enter your password",
+    "login": {
+      "title": "Sign in to AozoraReading",
+      "description": "Start your immersive reading journey",
+      "forgotPassword": "Forgot password",
+      "submit": "Sign in",
+      "submitting": "Signing in…",
+      "register": "Sign up",
+      "missingEmail": "Please enter your email",
+      "missingPassword": "Please enter your password",
+      "invalidEmail": "Please enter a valid email address",
+      "success": "Signed in successfully!",
+      "failure": "Sign in failed. Please check your email and password.",
+      "invalidCredentials": "Account not found or incorrect password. Please try again.",
+      "emailNotConfirmed": "Email not verified. Please verify your email first.",
+      "emailRateLimit": "Too many attempts. Please try again later."
+    },
+    "forget": {
+      "title": "Forgot password",
+      "description": "Enter your email and new password, and we'll send a verification code",
+      "newPassword": "New password",
+      "confirmNewPassword": "Confirm new password",
+      "newPasswordPlaceholder": "Enter your new password",
+      "confirmNewPasswordPlaceholder": "Re-enter your new password",
+      "otp": "Verification code",
+      "otpPlaceholder": "Enter the code from your email",
+      "sendEmail": "Send verification code email",
+      "sendingEmail": "Sending…",
+      "resendEmail": "Resend verification email",
+      "resendingEmail": "Resending…",
+      "resendCooldown": "Resend ({seconds}s)",
+      "verify": "Verify and reset password",
+      "verifying": "Verifying…",
+      "backToLogin": "Back to sign in",
+      "missingFields": "Please enter email and new password",
+      "missingEmail": "Please enter your email",
+      "passwordMismatch": "New passwords do not match",
+      "missingOtp": "Please enter email and verification code",
+      "invalidEmail": "Please enter a valid email address",
+      "emailSent": "Verification email sent. Please check your inbox.",
+      "emailRateLimit": "Too many emails sent. Please try again later.",
+      "resendSuccess": "Verification email resent.",
+      "success": "Password reset successfully!",
+      "verifyFailure": "Verification failed. Please check your code.",
+      "sameAsOldPassword": "New password must be different from your old password.",
+      "failure": "Failed to send reset email. Please try again later."
+    },
+    "signUp": {
+      "title": "Sign up for AozoraReading",
+      "description": "Create an account and verify your email",
+      "otp": "Verification code",
+      "otpPlaceholder": "Enter the code from your email",
+      "sendEmail": "Send verification code email",
+      "sendingEmail": "Sending…",
+      "resendEmail": "Resend verification email",
+      "resendingEmail": "Resending…",
+      "resendCooldown": "Resend ({seconds}s)",
+      "verify": "Verify",
+      "verifying": "Verifying…",
+      "backToLogin": "Back to sign in",
+      "missingFields": "Please enter email and password",
+      "missingEmail": "Please enter your email",
+      "passwordMismatch": "Passwords do not match",
+      "missingOtp": "Please enter email and verification code",
+      "emailSent": "Verification email sent. Please check your inbox.",
+      "emailAlreadyRegistered": "This email is already registered. Please sign in.",
+      "emailRateLimit": "Too many emails sent. Please try again later.",
+      "resendSuccess": "Verification email resent.",
+      "success": "Registration successful!",
+      "verifyFailure": "Verification failed. Please check your code.",
+      "failure": "Registration failed. Please try again later."
+    }
+  }
+}

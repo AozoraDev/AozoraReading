@@ -1,0 +1,122 @@
+{
+  "nav": {
+    "home": "首页",
+    "library": "书城",
+    "favorites": "收藏",
+    "dashboard": "仪表盘",
+    "login": "登录",
+    "logout": "退出登录",
+    "userMenu": "用户菜单",
+    "mainNav": "主导航",
+    "openMenu": "打开菜单",
+    "closeMenu": "关闭菜单"
+  },
+  "locale": {
+    "label": "语言",
+    "switchTo": "切换为{locale}",
+    "en": "EN",
+    "zh": "中文"
+  },
+  "hero": {
+    "titleHighlight": "更智能",
+    "titleRest": "的小说阅读体验",
+    "description": "AI 自动生成角色关系图谱、世界观百科与作品简介，让阅读更轻松，理解更深入。",
+    "exploreLibrary": "探索书城",
+    "howItWorks": "工作原理"
+  },
+  "bookCard": {
+    "startReading": "开始阅读",
+    "favorite": "收藏"
+  },
+  "library": {
+    "searchPlaceholder": "搜索书籍…"
+  },
+  "startReading": {
+    "title": "准备开始探索下一个精彩故事了吗？",
+    "description": "发现经过智能整理的小说内容，快速了解人物关系、世界观设定与剧情脉络，享受更轻松的阅读体验。",
+    "signup": "免费注册"
+  },
+  "footer": {
+    "copyright": "© 2026 Aozora Reading. Better Reading Experience, Reimagined by AI.",
+    "github": "GitHub"
+  },
+  "auth": {
+    "email": "邮箱",
+    "password": "密码",
+    "confirmPassword": "重复密码",
+    "emailPlaceholder": "name@example.com",
+    "passwordPlaceholder": "请输入密码",
+    "confirmPasswordPlaceholder": "请再次输入密码",
+    "login": {
+      "title": "登录 AozoraReading",
+      "description": "开启您的沉浸式阅读之旅",
+      "forgotPassword": "忘记密码",
+      "submit": "登录",
+      "submitting": "登录中…",
+      "register": "注册",
+      "missingEmail": "请填写邮箱",
+      "missingPassword": "请填写密码",
+      "invalidEmail": "请输入有效的邮箱地址",
+      "success": "登录成功！",
+      "failure": "登录失败，请检查邮箱和密码",
+      "invalidCredentials": "账号不存在或密码错误，请检查后重试",
+      "emailNotConfirmed": "邮箱尚未验证，请先完成邮箱验证",
+      "emailRateLimit": "尝试次数过多，请稍后再试"
+    },
+    "forget": {
+      "title": "忘记密码",
+      "description": "输入邮箱和新密码，我们将发送验证码邮件",
+      "newPassword": "新密码",
+      "confirmNewPassword": "确认新密码",
+      "newPasswordPlaceholder": "请输入新密码",
+      "confirmNewPasswordPlaceholder": "请再次输入新密码",
+      "otp": "验证码",
+      "otpPlaceholder": "请输入邮箱中的验证码",
+      "sendEmail": "发送验证码邮件",
+      "sendingEmail": "发送中…",
+      "resendEmail": "重新发送验证邮件",
+      "resendingEmail": "重新发送中…",
+      "resendCooldown": "重新发送（{seconds}s）",
+      "verify": "验证并重置密码",
+      "verifying": "验证中…",
+      "backToLogin": "返回登录",
+      "missingFields": "请填写邮箱和新密码",
+      "missingEmail": "请填写邮箱",
+      "passwordMismatch": "两次输入的新密码不一致",
+      "missingOtp": "请填写邮箱和验证码",
+      "invalidEmail": "请输入有效的邮箱地址",
+      "emailSent": "验证邮件已发送，请查收邮箱",
+      "emailRateLimit": "发送邮件过于频繁，请稍后再试",
+      "resendSuccess": "验证邮件已重新发送",
+      "success": "密码重置成功！",
+      "verifyFailure": "验证失败，请检查验证码",
+      "sameAsOldPassword": "新密码不能与旧密码相同",
+      "failure": "发送失败，请稍后再试"
+    },
+    "signUp": {
+      "title": "注册 AozoraReading",
+      "description": "创建账户并验证邮箱",
+      "otp": "验证码",
+      "otpPlaceholder": "请输入邮箱中的验证码",
+      "sendEmail": "发送验证码邮件",
+      "sendingEmail": "发送中…",
+      "resendEmail": "重新发送验证邮件",
+      "resendingEmail": "重新发送中…",
+      "resendCooldown": "重新发送（{seconds}s）",
+      "verify": "验证",
+      "verifying": "验证中…",
+      "backToLogin": "返回登录",
+      "missingFields": "请填写邮箱和密码",
+      "missingEmail": "请填写邮箱",
+      "passwordMismatch": "两次输入的密码不一致",
+      "missingOtp": "请填写邮箱和验证码",
+      "emailSent": "验证邮件已发送，请查收邮箱",
+      "emailAlreadyRegistered": "该邮箱已注册，请直接登录",
+      "emailRateLimit": "发送邮件过于频繁，请稍后再试",
+      "resendSuccess": "验证邮件已重新发送",
+      "success": "注册成功！",
+      "verifyFailure": "验证失败，请检查验证码",
+      "failure": "注册失败，请稍后再试"
+    }
+  }
+}
