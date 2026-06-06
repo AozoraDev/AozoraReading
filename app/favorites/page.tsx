@@ -1,6 +1,8 @@
+import type { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
 
 import { FavoritesPageContent } from "@/app/favorites/components/favoritesPageContent"
+import { getPageMetadata } from "@/lib/metadata"
 import {
   getBooksinfosByIds,
   searchBooksinfosByIds,
@@ -9,6 +11,10 @@ import { getUserFavoriteNovelIds } from "@/lib/supabase/favorites/getUserFavorit
 
 type FavoritesPageProps = {
   searchParams: Promise<{ q?: string }>
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  return getPageMetadata("favorites")
 }
 
 export default async function FavoritesPage({ searchParams }: FavoritesPageProps) {

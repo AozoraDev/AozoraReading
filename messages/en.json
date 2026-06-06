@@ -1,4 +1,18 @@
 {
+  "metadata": {
+    "title": "AozoraReading",
+    "titleTemplate": "%s | AozoraReading",
+    "description": "AI automatically generates character relationship maps, world-building encyclopedias, and work summaries to make reading easier and understanding deeper.",
+    "pages": {
+      "library": "Library",
+      "favorites": "Favorites",
+      "dashboard": "Dashboard",
+      "howItWorks": "How it works",
+      "login": "Sign in",
+      "signup": "Sign up",
+      "forget": "Forgot password"
+    }
+  },
   "nav": {
     "home": "Home",
     "library": "Library",

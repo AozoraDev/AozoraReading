@@ -1,4 +1,11 @@
+import type { Metadata } from "next"
+
 import { SignupForm } from "@/app/signup/signup-form"
+import { getPageMetadata } from "@/lib/metadata"
+
+export async function generateMetadata(): Promise<Metadata> {
+  return getPageMetadata("signup")
+}
 
 export default function SignupPage() {
   return (

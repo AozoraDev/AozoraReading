@@ -1,4 +1,18 @@
 {
+  "metadata": {
+    "title": "AozoraReading",
+    "titleTemplate": "%s | AozoraReading",
+    "description": "AI 自动生成角色关系图谱、世界观百科与作品简介，让阅读更轻松，理解更深入。",
+    "pages": {
+      "library": "书城",
+      "favorites": "收藏",
+      "dashboard": "仪表盘",
+      "howItWorks": "工作原理",
+      "login": "登录",
+      "signup": "注册",
+      "forget": "忘记密码"
+    }
+  },
   "nav": {
     "home": "首页",
     "library": "书城",

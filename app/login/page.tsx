@@ -1,6 +1,12 @@
+import type { Metadata } from "next"
 import { Suspense } from "react"
 
 import { LoginForm } from "@/app/login/login-form"
+import { getPageMetadata } from "@/lib/metadata"
+
+export async function generateMetadata(): Promise<Metadata> {
+  return getPageMetadata("login")
+}
 
 export default function LoginPage() {
   return (
