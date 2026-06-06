@@ -63,7 +63,7 @@ export function FavoritesPageContent({
         books={books}
         startReadingLabel={startReadingLabel}
         favoriteLabel={favoriteLabel}
-        isFavorited={() => true}
+        favoriteNovelIds={books.map((book) => book.novel_id)}
         onFavoriteChange={handleFavoriteChange}
       />
     </div>

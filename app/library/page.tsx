@@ -29,8 +29,6 @@ export default async function LibraryPage({ searchParams }: LibraryPageProps) {
       getTranslations("nav"),
     ])
 
-  const favoriteSet = new Set(favoriteNovelIds)
-
   return (
     <div className="py-8 sm:py-12">
       <SectionHeader
@@ -50,7 +48,7 @@ export default async function LibraryPage({ searchParams }: LibraryPageProps) {
         books={books}
         startReadingLabel={tBookCard("startReading")}
         favoriteLabel={tBookCard("favorite")}
-        isFavorited={(novelId) => favoriteSet.has(novelId)}
+        favoriteNovelIds={favoriteNovelIds}
       />
     </div>
   )
