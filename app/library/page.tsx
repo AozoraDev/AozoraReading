@@ -1,20 +1,33 @@
 import { Library } from "lucide-react"
 import { getTranslations } from "next-intl/server"
 
-import { BookCard } from "@/components/sections/bookCard"
+import { BookGrid } from "@/components/sections/bookGrid"
 import { BookSearch } from "@/components/sections/bookSearch"
 import { SectionHeader } from "@/components/sections/sectionHeader"
-import { getBooksinfos } from "@/lib/supabase/books/getBooksinfos"
+import {
+  getBooksinfos,
+  getNovelsCount,
+  searchBooksinfos,
+} from "@/lib/supabase/books/getBooksinfos"
 import { getUserFavoriteNovelIds } from "@/lib/supabase/favorites/getUserFavoriteNovelIds"
 
-export default async function LibraryPage() {
-  const [books, favoriteNovelIds, tBookCard, tLibrary, tNav] = await Promise.all([
-    getBooksinfos(),
-    getUserFavoriteNovelIds(),
-    getTranslations("bookCard"),
-    getTranslations("library"),
-    getTranslations("nav"),
-  ])
+type LibraryPageProps = {
+  searchParams: Promise<{ q?: string }>
+}
+
+export default async function LibraryPage({ searchParams }: LibraryPageProps) {
+  const { q = "" } = await searchParams
+  const query = q.trim()
+
+  const [books, totalNovelCount, favoriteNovelIds, tBookCard, tLibrary, tNav] =
+    await Promise.all([
+      query ? searchBooksinfos(query) : getBooksinfos(),
+      getNovelsCount(),
+      getUserFavoriteNovelIds(),
+      getTranslations("bookCard"),
+      getTranslations("library"),
+      getTranslations("nav"),
+    ])
 
   const favoriteSet = new Set(favoriteNovelIds)
 
@@ -24,26 +37,21 @@ export default async function LibraryPage() {
         icon={Library}
         title={tNav("library")}
         subtitle={tLibrary("subtitle")}
-        badge={tLibrary("bookCount", { count: books.length })}
+        badge={tLibrary("bookCount", { count: totalNovelCount })}
       />
 
       <BookSearch
         searchPlaceholder={tLibrary("searchPlaceholder")}
         searchButton={tLibrary("searchButton")}
+        defaultQuery={query}
       />
 
-      <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {books.map((book) => (
-          <li key={book.novel_id}>
-            <BookCard
-              {...book}
-              isFavorited={favoriteSet.has(book.novel_id)}
-              startReadingLabel={tBookCard("startReading")}
-              favoriteLabel={tBookCard("favorite")}
-            />
-          </li>
-        ))}
-      </ul>
+      <BookGrid
+        books={books}
+        startReadingLabel={tBookCard("startReading")}
+        favoriteLabel={tBookCard("favorite")}
+        isFavorited={(novelId) => favoriteSet.has(novelId)}
+      />
     </div>
   )
 }

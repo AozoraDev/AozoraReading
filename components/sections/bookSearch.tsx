@@ -10,17 +10,23 @@ import {
 export type BookSearchProps = {
   searchPlaceholder: string
   searchButton: string
+  action?: string
+  defaultQuery?: string
 }
 
 export function BookSearch({
   searchPlaceholder,
   searchButton,
+  action = "/library",
+  defaultQuery = "",
 }: BookSearchProps) {
   return (
-    <div className="mb-8 flex max-w-md gap-2">
+    <form action={action} method="get" className="mb-8 flex max-w-md gap-2">
       <InputGroup className="min-w-0 flex-1">
         <InputGroupInput
           type="search"
+          name="q"
+          defaultValue={defaultQuery}
           placeholder={searchPlaceholder}
           aria-label={searchPlaceholder}
         />
@@ -28,9 +34,9 @@ export function BookSearch({
           <Search className="text-muted-foreground" />
         </InputGroupAddon>
       </InputGroup>
-      <Button type="button" variant="brand" className="shrink-0 rounded-lg">
+      <Button type="submit" variant="brand" className="shrink-0 rounded-lg">
         {searchButton}
       </Button>
-    </div>
+    </form>
   )
 }

@@ -4,13 +4,15 @@ import { Heart } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
 
-import { BookCard } from "@/components/sections/bookCard"
+import { BookGrid } from "@/components/sections/bookGrid"
 import { BookSearch } from "@/components/sections/bookSearch"
 import { SectionHeader } from "@/components/sections/sectionHeader"
 import type { BookInfo } from "@/lib/supabase/books/getBooksinfos"
 
 type FavoritesPageContentProps = {
   initialBooks: BookInfo[]
+  totalFavoriteCount: number
+  defaultQuery?: string
   title: string
   subtitle: string
   searchPlaceholder: string
@@ -21,6 +23,8 @@ type FavoritesPageContentProps = {
 
 export function FavoritesPageContent({
   initialBooks,
+  totalFavoriteCount,
+  defaultQuery = "",
   title,
   subtitle,
   searchPlaceholder,
@@ -30,10 +34,12 @@ export function FavoritesPageContent({
 }: FavoritesPageContentProps) {
   const t = useTranslations("favorites")
   const [books, setBooks] = useState(initialBooks)
+  const [favoriteCount, setFavoriteCount] = useState(totalFavoriteCount)
 
   function handleFavoriteChange(novelId: string, isFavorited: boolean) {
     if (!isFavorited) {
       setBooks((prev) => prev.filter((book) => book.novel_id !== novelId))
+      setFavoriteCount((prev) => prev - 1)
     }
   }
 
@@ -43,29 +49,23 @@ export function FavoritesPageContent({
         icon={Heart}
         title={title}
         subtitle={subtitle}
-        badge={t("bookCount", { count: books.length })}
+        badge={t("bookCount", { count: favoriteCount })}
       />
 
       <BookSearch
+        action="/favorites"
+        defaultQuery={defaultQuery}
         searchPlaceholder={searchPlaceholder}
         searchButton={searchButton}
       />
 
-      <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {books.map((book) => (
-          <li key={book.novel_id}>
-            <BookCard
-              {...book}
-              isFavorited
-              startReadingLabel={startReadingLabel}
-              favoriteLabel={favoriteLabel}
-              onFavoriteChange={(isFavorited) =>
-                handleFavoriteChange(book.novel_id, isFavorited)
-              }
-            />
-          </li>
-        ))}
-      </ul>
+      <BookGrid
+        books={books}
+        startReadingLabel={startReadingLabel}
+        favoriteLabel={favoriteLabel}
+        isFavorited={() => true}
+        onFavoriteChange={handleFavoriteChange}
+      />
     </div>
   )
 }

@@ -1,7 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 
-import { BookCardFavoriteButton } from "@/components/sections/bookCardFavoriteButton"
+import { BookCardFavoriteButton } from "@/components/sections/bookCard/bookCardFavoriteButton"
 import { Button } from "@/components/ui/button"
 import {
   Card,
