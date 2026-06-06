@@ -1,14 +1,25 @@
 import { getTranslations } from "next-intl/server"
 
 import { FavoritesPageContent } from "@/app/favorites/components/favoritesPageContent"
-import { getBooksinfosByIds } from "@/lib/supabase/books/getBooksinfos"
+import {
+  getBooksinfosByIds,
+  searchBooksinfosByIds,
+} from "@/lib/supabase/books/getBooksinfos"
 import { getUserFavoriteNovelIds } from "@/lib/supabase/favorites/getUserFavoriteNovelIds"
 
-export default async function FavoritesPage() {
+type FavoritesPageProps = {
+  searchParams: Promise<{ q?: string }>
+}
+
+export default async function FavoritesPage({ searchParams }: FavoritesPageProps) {
+  const { q = "" } = await searchParams
+  const query = q.trim()
   const favoriteNovelIds = await getUserFavoriteNovelIds()
 
   const [books, tBookCard, tFavorites, tNav] = await Promise.all([
-    getBooksinfosByIds(favoriteNovelIds),
+    query
+      ? searchBooksinfosByIds(favoriteNovelIds, query)
+      : getBooksinfosByIds(favoriteNovelIds),
     getTranslations("bookCard"),
     getTranslations("favorites"),
     getTranslations("nav"),
@@ -17,6 +28,8 @@ export default async function FavoritesPage() {
   return (
     <FavoritesPageContent
       initialBooks={books}
+      totalFavoriteCount={favoriteNovelIds.length}
+      defaultQuery={query}
       title={tNav("favorites")}
       subtitle={tFavorites("subtitle")}
       searchPlaceholder={tFavorites("searchPlaceholder")}
