@@ -26,10 +26,21 @@
   },
   "bookCard": {
     "startReading": "Start Reading",
-    "favorite": "Add to favorites"
+    "favorite": "Add to favorites",
+    "loginToFavorite": "Please sign in to add favorites",
+    "favoriteError": "Could not update favorites. Please try again."
   },
   "library": {
-    "searchPlaceholder": "Search books…"
+    "searchPlaceholder": "Search books…",
+    "searchButton": "Search",
+    "subtitle": "Browse AI-organized novels and find your next great read.",
+    "bookCount": "{count} books"
+  },
+  "favorites": {
+    "searchPlaceholder": "Search favorites…",
+    "searchButton": "Search",
+    "subtitle": "Your saved novels, ready whenever you want to pick up where you left off.",
+    "bookCount": "{count} books"
   },
   "startReading": {
     "title": "Ready to discover your next great story?",

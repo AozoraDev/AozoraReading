@@ -1,7 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
-import { Heart } from "lucide-react"
 
+import { BookCardFavoriteButton } from "@/components/sections/bookCardFavoriteButton"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -14,20 +14,26 @@ import { getCoverUrl } from "@/lib/supabase/books/getcover"
 import { cn } from "@/lib/utils"
 
 export type BookCardProps = {
+  novel_id: string
   cover_url: string
   title: string
   author: string
   startReadingLabel: string
   favoriteLabel: string
+  isFavorited?: boolean
+  onFavoriteChange?: (isFavorited: boolean) => void
   className?: string
 }
 
 export function BookCard({
+  novel_id,
   cover_url,
   title,
   author,
   startReadingLabel,
   favoriteLabel,
+  isFavorited = false,
+  onFavoriteChange,
   className,
 }: BookCardProps) {
   const coverSrc = getCoverUrl(cover_url)
@@ -75,15 +81,12 @@ export function BookCard({
           >
             <Link href="#">{startReadingLabel}</Link>
           </Button>
-          <Button
-            type="button"
-            variant="brandOutlineCta"
-            size="icon-lg"
-            aria-label={favoriteLabel}
-            className="shrink-0 border-brand-blue-light bg-white/30 [&_svg]:size-5"
-          >
-            <Heart className="fill-none" strokeWidth={2} />
-          </Button>
+          <BookCardFavoriteButton
+            novelId={novel_id}
+            initialIsFavorited={isFavorited}
+            favoriteLabel={favoriteLabel}
+            onFavoriteChange={onFavoriteChange}
+          />
         </CardFooter>
       </CardContent>
     </Card>

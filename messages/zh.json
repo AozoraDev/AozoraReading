@@ -26,10 +26,21 @@
   },
   "bookCard": {
     "startReading": "开始阅读",
-    "favorite": "收藏"
+    "favorite": "收藏",
+    "loginToFavorite": "请登录后再收藏",
+    "favoriteError": "收藏操作失败，请稍后再试"
   },
   "library": {
-    "searchPlaceholder": "搜索书籍…"
+    "searchPlaceholder": "搜索书籍…",
+    "searchButton": "搜索",
+    "subtitle": "浏览经 AI 整理的小说，发现你的下一本好书。",
+    "bookCount": "{count} 本书"
+  },
+  "favorites": {
+    "searchPlaceholder": "搜索收藏…",
+    "searchButton": "搜索",
+    "subtitle": "你收藏的小说，随时可以继续阅读。",
+    "bookCount": "{count} 本书"
   },
   "startReading": {
     "title": "准备开始探索下一个精彩故事了吗？",
