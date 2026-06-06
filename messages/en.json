@@ -24,6 +24,14 @@
     "exploreLibrary": "Explore Library",
     "howItWorks": "How it works"
   },
+  "pagination": {
+    "previous": "Previous",
+    "next": "Next",
+    "go": "Go",
+    "goToPage": "Go to page",
+    "pagePlaceholder": "Page",
+    "pageOf": "Page {current} of {total}"
+  },
   "bookCard": {
     "startReading": "Start Reading",
     "favorite": "Add to favorites",

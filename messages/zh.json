@@ -24,6 +24,14 @@
     "exploreLibrary": "探索书城",
     "howItWorks": "工作原理"
   },
+  "pagination": {
+    "previous": "上一页",
+    "next": "下一页",
+    "go": "跳转",
+    "goToPage": "跳转到页码",
+    "pagePlaceholder": "页码",
+    "pageOf": "第 {current} / {total} 页"
+  },
   "bookCard": {
     "startReading": "开始阅读",
     "favorite": "收藏",

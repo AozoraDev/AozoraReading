@@ -52,7 +52,7 @@ export function BookCard({
         width={240}
         height={360}
         unoptimized
-        className="aspect-2/3 w-1/3 shrink-0 object-cover"
+        className="aspect-2/3 w-1/3 shrink-0 rounded-l-xl rounded-tr-none! rounded-br-none! object-cover"
         sizes="33vw"
       />
 
