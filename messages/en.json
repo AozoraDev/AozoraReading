@@ -69,9 +69,38 @@
       "title": "Dashboard",
       "overview": "Overview",
       "addNovel": "Add novel",
+      "addChapter": "Add chapter",
       "books": "Books",
       "users": "Users",
       "settings": "Settings"
+    },
+    "addChapter": {
+      "title": "Add chapter",
+      "description": "Upload and create a new chapter for an existing novel.",
+      "form": {
+        "chapterInfoSection": "Chapter information",
+        "chapterInfoDescription": "Enter the ID of the novel to add a chapter to.",
+        "chapterContentSection": "Chapter content",
+        "chapterContentDescription": "Upload a chapter text file.",
+        "novelIdLabel": "Novel ID",
+        "novelIdPlaceholder": "Enter novel ID",
+        "novelIdHint": "Find the ID in the novels table on the overview page.",
+        "fileLabel": "Chapter file",
+        "fileHint": "Only .txt files are supported, up to 50 MB.",
+        "chooseFile": "Choose file",
+        "noFileSelected": "No file selected yet",
+        "submit": "Submit",
+        "submitting": "Submitting…",
+        "submitSuccess": "{count} chapter(s) added successfully.",
+        "submitError": "Please check the form and try again.",
+        "novelNotFound": "No novel found for that ID. Please check and try again.",
+        "noChaptersFound": "No chapters could be split from the file. Please check the txt format.",
+        "novelIdRequired": "Novel ID is required.",
+        "novelIdInvalid": "Novel ID must be a positive integer.",
+        "fileRequired": "Chapter file is required.",
+        "invalidFileType": "Please choose a .txt file.",
+        "fileTooLarge": "File size must not exceed 50 MB."
+      }
     },
     "addNovel": {
       "title": "Add novel",
@@ -116,6 +145,7 @@
     },
     "table": {
       "cover": "Cover",
+      "novelId": "ID",
       "title": "Title",
       "author": "Author",
       "actions": "Actions",

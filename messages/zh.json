@@ -69,9 +69,38 @@
       "title": "仪表盘",
       "overview": "概览",
       "addNovel": "添加小说",
+      "addChapter": "添加章节",
       "books": "书籍",
       "users": "用户",
       "settings": "设置"
+    },
+    "addChapter": {
+      "title": "添加章节",
+      "description": "为已有小说上传并创建新的章节。",
+      "form": {
+        "chapterInfoSection": "章节信息",
+        "chapterInfoDescription": "填写要添加章节的小说 ID。",
+        "chapterContentSection": "章节正文",
+        "chapterContentDescription": "上传章节 txt 文件。",
+        "novelIdLabel": "小说 ID",
+        "novelIdPlaceholder": "请输入小说 ID",
+        "novelIdHint": "可在概览页的小说列表中查看 ID。",
+        "fileLabel": "章节文件",
+        "fileHint": "仅支持 .txt 格式，文件大小不超过 50 MB。",
+        "chooseFile": "选择文件",
+        "noFileSelected": "尚未选择文件",
+        "submit": "提交",
+        "submitting": "提交中…",
+        "submitSuccess": "已成功添加 {count} 个章节。",
+        "submitError": "请检查表单填写是否正确。",
+        "novelNotFound": "未找到对应的小说 ID，请确认后重试。",
+        "noChaptersFound": "未能从文件中切分出章节，请检查 txt 格式。",
+        "novelIdRequired": "请填写小说 ID。",
+        "novelIdInvalid": "小说 ID 须为正整数。",
+        "fileRequired": "请上传章节文件。",
+        "invalidFileType": "请选择 .txt 格式的文件。",
+        "fileTooLarge": "文件大小不能超过 50 MB。"
+      }
     },
     "addNovel": {
       "title": "添加小说",
@@ -116,6 +145,7 @@
     },
     "table": {
       "cover": "封面",
+      "novelId": "ID",
       "title": "书名",
       "author": "作者",
       "actions": "操作",
