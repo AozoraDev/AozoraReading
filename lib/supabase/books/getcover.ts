@@ -2,8 +2,8 @@ import { getSupabaseUrl } from "@/lib/supabase/env"
 
 const COVER_BUCKET = "cover"
 
-// 获取封面路径
-function getCoverPath(cover_url: string): string {
+// 获取封面在 storage bucket 中的相对路径
+export function getCoverPath(cover_url: string): string {
   // 去除引号
   const path = cover_url.trim().replace(/^["']|["']$/g, "")
 

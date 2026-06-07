@@ -74,7 +74,24 @@
     },
     "overview": {
       "title": "概览",
-      "description": "快速查看站点活动与关键指标。"
+      "description": "展示所有已存在的图书。",
+      "bookCount": "{count} 本书",
+      "searchPlaceholder": "搜索书籍…",
+      "searchButton": "搜索"
+    },
+    "table": {
+      "cover": "封面",
+      "title": "书名",
+      "author": "作者",
+      "actions": "操作",
+      "delete": "删除",
+      "empty": "暂无小说",
+      "deleteConfirmTitle": "确定删除这本小说吗？",
+      "deleteConfirmDescription": "此操作将永久删除该小说、所有章节及其封面图片，且无法撤销。",
+      "cancel": "取消",
+      "confirm": "确认",
+      "deleteSuccess": "小说已成功删除。",
+      "deleteError": "删除失败，请稍后再试。"
     }
   },
   "startReading": {
