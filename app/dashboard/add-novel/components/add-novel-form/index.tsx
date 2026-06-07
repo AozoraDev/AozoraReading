@@ -1,7 +1,6 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useMutation } from "@tanstack/react-query"
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
 import type { FieldErrors } from "react-hook-form"
@@ -57,29 +56,22 @@ export function AddNovelForm() {
     },
   })
 
-  const mutation = useMutation({
-    mutationFn: submitAddNovel,
-    onSuccess: () => {
-      toast.success(t("submitSuccess"))
-      reset()
-      router.refresh()
-    },
-    onError: (error) => {
-      toast.error(error instanceof Error ? error.message : t("submitError"))
-    },
-  })
-
   const onSubmit = handleSubmit(
-    (values) => {
-      mutation.mutate(toAddNovelSubmitPayload(values))
+    async (values) => {
+      try {
+        await submitAddNovel(toAddNovelSubmitPayload(values))
+        toast.success(t("submitSuccess"))
+        reset()
+        router.refresh()
+      } catch (error) {
+        toast.error(error instanceof Error ? error.message : t("submitError"))
+      }
     },
     (formErrors) => {
       const messageKey = getFirstValidationMessage(formErrors)
       toast.error(messageKey ? t(messageKey) : t("submitError"))
     },
   )
-
-  const isPending = mutation.isPending || isSubmitting
 
   return (
     <form className="space-y-8 [&_label]:text-brand-blue" onSubmit={onSubmit} noValidate>
@@ -92,7 +84,7 @@ export function AddNovelForm() {
       <Separator className="bg-brand-green data-horizontal:h-1" />
 
       <FormSubmitButton
-        isPending={isPending}
+        isPending={isSubmitting}
         submitLabel={t("submit")}
         submittingLabel={t("submitting")}
       />
