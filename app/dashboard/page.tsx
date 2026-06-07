@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 
+import { DashboardPageShell } from "@/app/dashboard/components/dashboard-page-shell"
 import { getPageMetadata } from "@/lib/metadata"
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -7,5 +8,5 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function DashboardPage() {
-  return null
+  return <DashboardPageShell />
 }

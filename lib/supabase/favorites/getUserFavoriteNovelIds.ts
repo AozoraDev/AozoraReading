@@ -1,7 +1,13 @@
 import { createClient } from "@/lib/supabase/server"
 
-// 从 favorites 表中获取用户收藏的小说 ID
-export async function getUserFavoriteNovelIds(): Promise<string[]> {
+// 从 favorites 表中获取指定小说 ID 里用户已收藏的项
+export async function getUserFavoriteNovelIds(
+  novelIds: string[]
+): Promise<string[]> {
+  if (novelIds.length === 0) {
+    return []
+  }
+
   const supabase = await createClient()
 
   const {
@@ -12,11 +18,14 @@ export async function getUserFavoriteNovelIds(): Promise<string[]> {
     return []
   }
 
-  // 从 favorites 表中获取用户收藏的小说 ID
   const { data, error } = await supabase
     .from("favorites")
     .select("novel_id")
     .eq("uid", user.id)
+    .in(
+      "novel_id",
+      novelIds.map((id) => Number(id))
+    )
 
   if (error) {
     throw new Error(error.message)

@@ -6,11 +6,18 @@ import { BookCard } from "@/components/sections/bookCard/bookCard"
 import { BookGridPagination } from "@/components/sections/bookGrid/components/pagination"
 import { useBookGridPagination } from "@/components/sections/bookGrid/hooks/use-book-grid-pagination"
 import { bookGridStyles } from "@/components/sections/bookGrid/styles/styles"
+import { buildBookGridPageHref } from "@/components/sections/bookGrid/utils/build-page-href"
+import { PAGE_SIZE } from "@/components/sections/bookGrid/utils/constants"
 import type { BookInfo } from "@/lib/supabase/books/getBooksinfos"
 import { cn } from "@/lib/utils"
 
 type BookGridProps = {
   books: BookInfo[]
+  totalCount: number
+  currentPage: number
+  basePath: string
+  searchQuery?: string
+  pageSize?: number
   startReadingLabel: string
   favoriteLabel: string
   favoriteNovelIds?: string[]
@@ -20,6 +27,11 @@ type BookGridProps = {
 
 export function BookGrid({
   books,
+  totalCount,
+  currentPage,
+  basePath,
+  searchQuery = "",
+  pageSize = PAGE_SIZE,
   startReadingLabel,
   favoriteLabel,
   favoriteNovelIds,
@@ -31,25 +43,23 @@ export function BookGrid({
     [favoriteNovelIds]
   )
 
-  const {
-    effectivePage,
-    totalPages,
-    startIndex,
-    pageSize,
-    pageNumbers,
-    jumpInput,
-    setJumpInput,
-    goToPage,
-    handleJumpSubmit,
-  } = useBookGridPagination({ itemCount: books.length })
+  const getPageHref = (page: number) =>
+    buildBookGridPageHref(basePath, page, searchQuery)
 
-  const paginatedBooks = books.slice(startIndex, startIndex + pageSize)
-  const showPagination = books.length > 0 && totalPages > 1
+  const { effectivePage, totalPages, pageNumbers, goToPage } =
+    useBookGridPagination({
+    currentPage,
+    totalCount,
+    pageSize,
+    getPageHref,
+  })
+
+  const showPagination = totalCount > 0 && totalPages > 1
 
   return (
     <div className={cn(bookGridStyles.root, className)}>
       <ul className={bookGridStyles.list}>
-        {paginatedBooks.map((book) => (
+        {books.map((book) => (
           <li key={book.novel_id}>
             <BookCard
               {...book}
@@ -71,9 +81,6 @@ export function BookGrid({
           effectivePage={effectivePage}
           totalPages={totalPages}
           pageNumbers={pageNumbers}
-          jumpInput={jumpInput}
-          onJumpInputChange={setJumpInput}
-          onJumpSubmit={handleJumpSubmit}
           onGoToPage={goToPage}
         />
       ) : null}

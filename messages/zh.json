@@ -64,6 +64,19 @@
     "subtitle": "你收藏的小说，随时可以继续阅读。",
     "bookCount": "{count} 本书"
   },
+  "dashboard": {
+    "nav": {
+      "title": "仪表盘",
+      "overview": "概览",
+      "books": "书籍",
+      "users": "用户",
+      "settings": "设置"
+    },
+    "overview": {
+      "title": "概览",
+      "description": "快速查看站点活动与关键指标。"
+    }
+  },
   "startReading": {
     "title": "准备开始探索下一个精彩故事了吗？",
     "description": "发现经过智能整理的小说内容，快速了解人物关系、世界观设定与剧情脉络，享受更轻松的阅读体验。",

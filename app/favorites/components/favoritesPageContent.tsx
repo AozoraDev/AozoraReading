@@ -11,6 +11,8 @@ import type { BookInfo } from "@/lib/supabase/books/getBooksinfos"
 
 type FavoritesPageContentProps = {
   initialBooks: BookInfo[]
+  totalCount: number
+  currentPage: number
   totalFavoriteCount: number
   defaultQuery?: string
   title: string
@@ -23,6 +25,8 @@ type FavoritesPageContentProps = {
 
 export function FavoritesPageContent({
   initialBooks,
+  totalCount,
+  currentPage,
   totalFavoriteCount,
   defaultQuery = "",
   title,
@@ -34,11 +38,14 @@ export function FavoritesPageContent({
 }: FavoritesPageContentProps) {
   const t = useTranslations("favorites")
   const [books, setBooks] = useState(initialBooks)
+  const [listTotalCount, setListTotalCount] = useState(totalCount)
   const [favoriteCount, setFavoriteCount] = useState(totalFavoriteCount)
 
+  
   function handleFavoriteChange(novelId: string, isFavorited: boolean) {
     if (!isFavorited) {
       setBooks((prev) => prev.filter((book) => book.novel_id !== novelId))
+      setListTotalCount((prev) => Math.max(0, prev - 1))
       setFavoriteCount((prev) => prev - 1)
     }
   }
@@ -61,6 +68,10 @@ export function FavoritesPageContent({
 
       <BookGrid
         books={books}
+        totalCount={listTotalCount}
+        currentPage={currentPage}
+        basePath="/favorites"
+        searchQuery={defaultQuery}
         startReadingLabel={startReadingLabel}
         favoriteLabel={favoriteLabel}
         favoriteNovelIds={books.map((book) => book.novel_id)}
