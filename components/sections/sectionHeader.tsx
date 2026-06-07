@@ -1,5 +1,6 @@
 import type { LucideIcon } from "lucide-react"
 
+import { BookCountBadge } from "@/components/sections/bookCountBadge"
 import {
   CardDescription,
   CardHeader,
@@ -40,11 +41,7 @@ export function SectionHeader({
             >
               {title}
             </CardTitle>
-            {badge ? (
-              <span className="inline-flex h-7 cursor-default items-center rounded-full border border-brand-green bg-brand-green px-2.5 text-sm font-medium tabular-nums text-brand-blue transition-colors hover:border-brand-blue hover:bg-white hover:text-brand-blue">
-                {badge}
-              </span>
-            ) : null}
+            {badge ? <BookCountBadge>{badge}</BookCountBadge> : null}
           </div>
           <CardDescription className="max-w-xl text-sm leading-relaxed sm:text-base">
             {subtitle}

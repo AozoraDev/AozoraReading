@@ -37,8 +37,8 @@ export function DashboardNavList({ variant }: DashboardNavListProps) {
                 ? "h-9 shrink-0 gap-1.5 px-3 font-normal"
                 : "h-9 w-full justify-start gap-2 px-2 font-normal",
               active
-                ? "bg-sidebar-accent text-sidebar-accent-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
-                : "text-sidebar-foreground hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground",
+                ? "bg-brand-blue text-white hover:bg-brand-blue/90 hover:text-white"
+                : "text-sidebar-foreground hover:bg-brand-blue/10 hover:text-brand-blue",
             )}
           >
             <Link

@@ -1,7 +1,12 @@
 import { createServerClient } from "@supabase/ssr"
+import { createClient as createSupabaseClient } from "@supabase/supabase-js"
 import { cookies } from "next/headers"
 
-import { getSupabaseAnonKey, getSupabaseUrl } from "@/lib/supabase/env"
+import {
+  getSupabaseAnonKey,
+  getSupabaseServiceRoleKey,
+  getSupabaseUrl,
+} from "@/lib/supabase/env"
 
 // 创建服务器客户端
 export async function createClient() {
@@ -26,6 +31,16 @@ export async function createClient() {
           // 服务器组件无法设置 Cookie；中间件处理刷新。
         }
       },
+    },
+  })
+}
+
+// 创建 service role 客户端（仅服务端管理操作，绕过 Storage RLS）
+export function createServiceRoleClient() {
+  return createSupabaseClient(getSupabaseUrl(), getSupabaseServiceRoleKey(), {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false,
     },
   })
 }

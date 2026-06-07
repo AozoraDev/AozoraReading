@@ -24,3 +24,11 @@ export function getSupabaseAnonKey() {
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
   )
 }
+
+// 获取 Supabase service role 密钥（仅服务端使用，绕过 Storage RLS）
+export function getSupabaseServiceRoleKey() {
+  return requiredEnv(
+    "SUPABASE_SERVICE_ROLE_KEY",
+    process.env.SUPABASE_SERVICE_ROLE_KEY
+  )
+}

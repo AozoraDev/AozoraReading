@@ -74,7 +74,24 @@
     },
     "overview": {
       "title": "Overview",
-      "description": "Monitor site activity and key metrics at a glance."
+      "description": "Display all existing books.",
+      "bookCount": "{count} books",
+      "searchPlaceholder": "Search books…",
+      "searchButton": "Search"
+    },
+    "table": {
+      "cover": "Cover",
+      "title": "Title",
+      "author": "Author",
+      "actions": "Actions",
+      "delete": "Delete",
+      "empty": "No novels yet.",
+      "deleteConfirmTitle": "Delete this novel?",
+      "deleteConfirmDescription": "This will permanently delete the novel, all chapters, and its cover image. This action cannot be undone.",
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "deleteSuccess": "Novel deleted successfully.",
+      "deleteError": "Could not delete the novel. Please try again."
     }
   },
   "startReading": {
