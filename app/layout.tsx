@@ -7,6 +7,7 @@ import "./globals.css"
 import { getRootMetadata } from "@/lib/metadata"
 import { Footer } from "@/components/sections/footer"
 import { Navbar } from "@/components/sections/navbar"
+import { QueryProvider } from "@/components/query-provider"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Toaster } from "@/components/ui/sonner"
 import { cn } from "@/lib/utils"
@@ -38,8 +39,9 @@ export default async function RootLayout({
     >
       <body>
         <NextIntlClientProvider messages={messages}>
-          <ThemeProvider>
-            <Toaster />
+          <QueryProvider>
+            <ThemeProvider>
+              <Toaster />
             <div className="flex min-h-screen flex-col overflow-x-hidden">
               <Navbar />
               <main className="mx-auto flex min-h-0 w-full max-w-6xl flex-1 flex-col px-4 sm:px-6">
@@ -47,7 +49,8 @@ export default async function RootLayout({
               </main>
               <Footer />
             </div>
-          </ThemeProvider>
+            </ThemeProvider>
+          </QueryProvider>
         </NextIntlClientProvider>
       </body>
     </html>

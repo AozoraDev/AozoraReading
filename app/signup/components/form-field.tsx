@@ -7,17 +7,21 @@ import { Label } from "@/components/ui/label"
 export function FormField({
   id,
   label,
+  labelClassName,
   error,
   children,
 }: {
   id: string
   label: string
+  labelClassName?: string
   error?: string
   children: ReactNode
 }) {
   return (
     <div className="grid gap-2">
-      <Label htmlFor={id}>{label}</Label>
+      <Label htmlFor={id} className={labelClassName}>
+        {label}
+      </Label>
       {children}
       {error ? <p className="text-sm text-destructive">{error}</p> : null}
     </div>
