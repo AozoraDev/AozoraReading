@@ -6,15 +6,12 @@ import { BookGrid } from "@/components/sections/bookGrid"
 import { BookSearch } from "@/components/sections/bookSearch"
 import { SectionHeader } from "@/components/sections/sectionHeader"
 import { getPageMetadata } from "@/lib/metadata"
-import {
-  getBooksinfos,
-  getNovelsCount,
-  searchBooksinfos,
-} from "@/lib/supabase/books/getBooksinfos"
+import { parsePageParam } from "@/lib/supabase/books/constants"
+import { getBooksPage, getNovelsCount } from "@/lib/supabase/books/getBooksinfos"
 import { getUserFavoriteNovelIds } from "@/lib/supabase/favorites/getUserFavoriteNovelIds"
 
 type LibraryPageProps = {
-  searchParams: Promise<{ q?: string }>
+  searchParams: Promise<{ q?: string; page?: string }>
 }
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -22,18 +19,27 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function LibraryPage({ searchParams }: LibraryPageProps) {
-  const { q = "" } = await searchParams
+  const { q = "", page: pageParam } = await searchParams
   const query = q.trim()
+  const page = parsePageParam(pageParam)
 
-  const [books, totalNovelCount, favoriteNovelIds, tBookCard, tLibrary, tNav] =
-    await Promise.all([
-      query ? searchBooksinfos(query) : getBooksinfos(),
-      getNovelsCount(),
-      getUserFavoriteNovelIds(),
-      getTranslations("bookCard"),
-      getTranslations("library"),
-      getTranslations("nav"),
-    ])
+  const [
+    { books, totalCount },
+    totalNovelCount,
+    tBookCard,
+    tLibrary,
+    tNav,
+  ] = await Promise.all([
+    getBooksPage({ page, query }),
+    getNovelsCount(),
+    getTranslations("bookCard"),
+    getTranslations("library"),
+    getTranslations("nav"),
+  ])
+
+  const favoriteNovelIds = await getUserFavoriteNovelIds(
+    books.map((book) => book.novel_id)
+  )
 
   return (
     <div className="py-8 sm:py-12">
@@ -52,6 +58,10 @@ export default async function LibraryPage({ searchParams }: LibraryPageProps) {
 
       <BookGrid
         books={books}
+        totalCount={totalCount}
+        currentPage={page}
+        basePath="/library"
+        searchQuery={query}
         startReadingLabel={tBookCard("startReading")}
         favoriteLabel={tBookCard("favorite")}
         favoriteNovelIds={favoriteNovelIds}

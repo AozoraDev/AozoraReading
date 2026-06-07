@@ -1,3 +1,4 @@
+import { BOOKS_PAGE_SIZE } from "@/lib/supabase/books/constants"
 import { createClient } from "@/lib/supabase/server"
 
 export type BookInfo = {
@@ -7,6 +8,18 @@ export type BookInfo = {
   cover_url: string
 }
 
+export type BooksPageResult = {
+  books: BookInfo[]
+  totalCount: number
+}
+
+export type GetBooksPageOptions = {
+  page: number
+  pageSize?: number
+  query?: string
+}
+
+// 将数据库中的数据映射为 BookInfo 类型
 function mapNovelRows(
   rows: { id: string | number; title: string; author: string; cover_url: string }[]
 ): BookInfo[] {
@@ -18,13 +31,13 @@ function mapNovelRows(
   }))
 }
 
-// 转义 ILIKE 模式中的特殊字符
+// 转义 %、_、\，避免被当作通配符
 function escapeIlikePattern(value: string): string {
   return value.replace(/[%_\\]/g, (char) => `\\${char}`)
 }
 
-// 构建 ILIKE 过滤器
-function buildIlikeOrFilter(columns: string[], query: string): string {
+// 在多个字段里模糊搜索，任一字段匹配即可
+export function buildIlikeOrFilter(columns: string[], query: string): string {
   const pattern = `%${escapeIlikePattern(query)}%`
   const quotedPattern = `"${pattern.replace(/"/g, '\\"')}"`
 
@@ -46,91 +59,37 @@ export async function getNovelsCount(): Promise<number> {
   return count ?? 0
 }
 
-// 获取所有小说信息
-export async function getBooksinfos(): Promise<BookInfo[]> {
-  const supabase = await createClient()
-
-  const { data, error } = await supabase
-    .from("novels")
-    .select("id, title, author, cover_url")
-
-  if (error) {
-    throw new Error(error.message)
-  }
-
-  return mapNovelRows(data ?? [])
-}
-
-// 在 novels 表中按标题或作者搜索
-export async function searchBooksinfos(query: string): Promise<BookInfo[]> {
+// 分页获取小说列表，可选搜索词
+// 根据页码、每页数量、搜索词获取小说列表
+export async function getBooksPage({
+  page,
+  pageSize = BOOKS_PAGE_SIZE,
+  query = "",
+}: GetBooksPageOptions): Promise<BooksPageResult> {
   const trimmed = query.trim()
-  if (!trimmed) {
-    return getBooksinfos()
-  }
+  const safePage = Math.max(1, page)
+  const from = (safePage - 1) * pageSize
+  const to = from + pageSize - 1
 
   const supabase = await createClient()
 
-  const { data, error } = await supabase
+  let builder = supabase
     .from("novels")
-    .select("id, title, author, cover_url")
-    .or(buildIlikeOrFilter(["title", "author"], trimmed))
+    .select("id, title, author, cover_url", { count: "exact" })
+    .order("id", { ascending: true })
+
+  if (trimmed) {
+    builder = builder.or(buildIlikeOrFilter(["title", "author"], trimmed))
+  }
+
+  const { data, count, error } = await builder.range(from, to)
 
   if (error) {
     throw new Error(error.message)
   }
 
-  return mapNovelRows(data ?? [])
-}
-
-// 根据小说 ID 获取小说信息
-export async function getBooksinfosByIds(
-  novelIds: string[]
-): Promise<BookInfo[]> {
-  if (novelIds.length === 0) {
-    return []
+  return {
+    books: mapNovelRows(data ?? []),
+    totalCount: count ?? 0,
   }
-
-  const supabase = await createClient()
-
-  // 根据小说 ID 获取小说信息
-  const { data, error } = await supabase
-    .from("novels")
-    .select("id, title, author, cover_url")
-    .in("id", novelIds)
-
-  if (error) {
-    throw new Error(error.message)
-  }
-
-  return mapNovelRows(data ?? [])
-}
-
-// 在指定小说 ID 范围内按标题或作者搜索
-// 收藏页面使用
-export async function searchBooksinfosByIds(
-  novelIds: string[],
-  query: string
-): Promise<BookInfo[]> {
-  if (novelIds.length === 0) {
-    return []
-  }
-
-  const trimmed = query.trim()
-  if (!trimmed) {
-    return getBooksinfosByIds(novelIds)
-  }
-
-  const supabase = await createClient()
-
-  const { data, error } = await supabase
-    .from("novels")
-    .select("id, title, author, cover_url")
-    .in("id", novelIds)
-    .or(buildIlikeOrFilter(["title", "author"], trimmed))
-
-  if (error) {
-    throw new Error(error.message)
-  }
-
-  return mapNovelRows(data ?? [])
 }

@@ -1,53 +1,43 @@
 "use client"
 
-import { useState } from "react"
+import { useRouter } from "next/navigation"
 
 import { PAGE_SIZE } from "@/components/sections/bookGrid/utils/constants"
 import { getPaginationRange } from "@/components/sections/bookGrid/utils/get-pagination-range"
 
 type UseBookGridPaginationOptions = {
-  itemCount: number
+  currentPage: number
+  totalCount: number
   pageSize?: number
+  getPageHref: (page: number) => string
 }
 
 export function useBookGridPagination({
-  itemCount,
+  currentPage,
+  totalCount,
   pageSize = PAGE_SIZE,
+  getPageHref,
 }: UseBookGridPaginationOptions) {
-  const [currentPage, setCurrentPage] = useState(1)
-  const [jumpInput, setJumpInput] = useState("1")
+  const router = useRouter()
 
-  const totalPages = Math.max(1, Math.ceil(itemCount / pageSize))
-  const effectivePage = Math.min(currentPage, totalPages)
-  const startIndex = (effectivePage - 1) * pageSize
+  const totalPages = Math.max(1, Math.ceil(totalCount / pageSize))
+  const effectivePage = Math.min(Math.max(1, currentPage), totalPages)
   const pageNumbers = getPaginationRange(effectivePage, totalPages)
 
   function goToPage(page: number) {
     const nextPage = Math.min(Math.max(1, page), totalPages)
-    setCurrentPage(nextPage)
-    setJumpInput(String(nextPage))
-  }
 
-  function handleJumpSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-
-    const page = Number.parseInt(jumpInput, 10)
-    if (Number.isNaN(page)) {
+    if (nextPage === effectivePage) {
       return
     }
 
-    goToPage(page)
+    router.push(getPageHref(nextPage))
   }
 
   return {
     effectivePage,
     totalPages,
-    startIndex,
-    pageSize,
     pageNumbers,
-    jumpInput,
-    setJumpInput,
     goToPage,
-    handleJumpSubmit,
   }
 }

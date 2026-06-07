@@ -1,6 +1,7 @@
 "use client"
 
 import { useTranslations } from "next-intl"
+import { useState } from "react"
 
 import { bookGridStyles } from "@/components/sections/bookGrid/styles/styles"
 import type { PageToken } from "@/components/sections/bookGrid/utils/get-pagination-range"
@@ -17,13 +18,63 @@ import {
 } from "@/components/ui/pagination"
 import { cn } from "@/lib/utils"
 
+type JumpToPageFormProps = {
+  effectivePage: number
+  totalPages: number
+  onGoToPage: (page: number) => void
+}
+
+function JumpToPageForm({
+  effectivePage,
+  totalPages,
+  onGoToPage,
+}: JumpToPageFormProps) {
+  const t = useTranslations("pagination")
+  const [jumpInput, setJumpInput] = useState(String(effectivePage))
+
+  function handleJumpSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+
+    const page = Number.parseInt(jumpInput, 10)
+    if (Number.isNaN(page)) {
+      return
+    }
+
+    onGoToPage(page)
+  }
+
+  return (
+    <form
+      onSubmit={handleJumpSubmit}
+      className={bookGridStyles.paginationJumpForm}
+    >
+      <label
+        htmlFor="book-grid-page"
+        className="text-xs font-medium whitespace-nowrap text-brand-blue/80"
+      >
+        {t("goToPage")}
+      </label>
+      <Input
+        id="book-grid-page"
+        type="number"
+        min={1}
+        max={totalPages}
+        value={jumpInput}
+        onChange={(event) => setJumpInput(event.target.value)}
+        placeholder={t("pagePlaceholder")}
+        className={bookGridStyles.paginationJumpInput}
+      />
+      <Button type="submit" variant="brand" size="sm" className="h-7 px-3">
+        {t("go")}
+      </Button>
+    </form>
+  )
+}
+
 type BookGridPaginationProps = {
   effectivePage: number
   totalPages: number
   pageNumbers: PageToken[]
-  jumpInput: string
-  onJumpInputChange: (value: string) => void
-  onJumpSubmit: (event: React.FormEvent<HTMLFormElement>) => void
   onGoToPage: (page: number) => void
 }
 
@@ -31,9 +82,6 @@ export function BookGridPagination({
   effectivePage,
   totalPages,
   pageNumbers,
-  jumpInput,
-  onJumpInputChange,
-  onJumpSubmit,
   onGoToPage,
 }: BookGridPaginationProps) {
   const t = useTranslations("pagination")
@@ -99,30 +147,12 @@ export function BookGridPagination({
             </PaginationContent>
           </Pagination>
 
-          <form
-            onSubmit={onJumpSubmit}
-            className={bookGridStyles.paginationJumpForm}
-          >
-            <label
-              htmlFor="book-grid-page"
-              className="text-xs font-medium whitespace-nowrap text-brand-blue/80"
-            >
-              {t("goToPage")}
-            </label>
-            <Input
-              id="book-grid-page"
-              type="number"
-              min={1}
-              max={totalPages}
-              value={jumpInput}
-              onChange={(event) => onJumpInputChange(event.target.value)}
-              placeholder={t("pagePlaceholder")}
-              className={bookGridStyles.paginationJumpInput}
-            />
-            <Button type="submit" variant="brand" size="sm" className="h-7 px-3">
-              {t("go")}
-            </Button>
-          </form>
+          <JumpToPageForm
+            key={effectivePage}
+            effectivePage={effectivePage}
+            totalPages={totalPages}
+            onGoToPage={onGoToPage}
+          />
         </div>
       </div>
     </nav>

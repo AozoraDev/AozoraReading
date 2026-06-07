@@ -64,6 +64,19 @@
     "subtitle": "Your saved novels, ready whenever you want to pick up where you left off.",
     "bookCount": "{count} books"
   },
+  "dashboard": {
+    "nav": {
+      "title": "Dashboard",
+      "overview": "Overview",
+      "books": "Books",
+      "users": "Users",
+      "settings": "Settings"
+    },
+    "overview": {
+      "title": "Overview",
+      "description": "Monitor site activity and key metrics at a glance."
+    }
+  },
   "startReading": {
     "title": "Ready to discover your next great story?",
     "description": "Discover intelligently organized novel content, quickly understand character relationships, world settings, and plot threads, and enjoy a more relaxed reading experience.",

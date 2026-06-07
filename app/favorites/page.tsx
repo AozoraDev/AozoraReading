@@ -3,14 +3,11 @@ import { getTranslations } from "next-intl/server"
 
 import { FavoritesPageContent } from "@/app/favorites/components/favoritesPageContent"
 import { getPageMetadata } from "@/lib/metadata"
-import {
-  getBooksinfosByIds,
-  searchBooksinfosByIds,
-} from "@/lib/supabase/books/getBooksinfos"
-import { getUserFavoriteNovelIds } from "@/lib/supabase/favorites/getUserFavoriteNovelIds"
+import { parsePageParam } from "@/lib/supabase/books/constants"
+import { getFavoriteBooksPage } from "@/lib/supabase/favorites/getFavoriteBooksPage"
 
 type FavoritesPageProps = {
-  searchParams: Promise<{ q?: string }>
+  searchParams: Promise<{ q?: string; page?: string }>
 }
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -18,14 +15,17 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function FavoritesPage({ searchParams }: FavoritesPageProps) {
-  const { q = "" } = await searchParams
+  const { q = "", page: pageParam } = await searchParams
   const query = q.trim()
-  const favoriteNovelIds = await getUserFavoriteNovelIds()
+  const page = parsePageParam(pageParam)
 
-  const [books, tBookCard, tFavorites, tNav] = await Promise.all([
-    query
-      ? searchBooksinfosByIds(favoriteNovelIds, query)
-      : getBooksinfosByIds(favoriteNovelIds),
+  const [
+    { books, totalCount, totalFavoriteCount },
+    tBookCard,
+    tFavorites,
+    tNav,
+  ] = await Promise.all([
+    getFavoriteBooksPage({ page, query }),
     getTranslations("bookCard"),
     getTranslations("favorites"),
     getTranslations("nav"),
@@ -34,7 +34,9 @@ export default async function FavoritesPage({ searchParams }: FavoritesPageProps
   return (
     <FavoritesPageContent
       initialBooks={books}
-      totalFavoriteCount={favoriteNovelIds.length}
+      totalCount={totalCount}
+      currentPage={page}
+      totalFavoriteCount={totalFavoriteCount}
       defaultQuery={query}
       title={tNav("favorites")}
       subtitle={tFavorites("subtitle")}
