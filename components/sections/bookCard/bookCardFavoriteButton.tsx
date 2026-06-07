@@ -26,7 +26,14 @@ export function BookCardFavoriteButton({
   const t = useTranslations("bookCard")
   const { uid, isLoggedIn } = useAuthUser()
   const [isFavorited, setIsFavorited] = useState(initialIsFavorited)
+  const [prevInitialIsFavorited, setPrevInitialIsFavorited] =
+    useState(initialIsFavorited)
   const [isPending, setIsPending] = useState(false)
+
+  if (initialIsFavorited !== prevInitialIsFavorited) {
+    setPrevInitialIsFavorited(initialIsFavorited)
+    setIsFavorited(initialIsFavorited)
+  }
 
   async function handleToggle() {
     if (!isLoggedIn || !uid) {
@@ -39,10 +46,7 @@ export function BookCardFavoriteButton({
 
     setIsPending(true)
     try {
-      // 创建 Supabase 客户端
       const supabase = createClient()
-      // 如果收藏状态为已收藏，添加收藏
-      // 如果收藏状态为未收藏，添加收藏
       const { error } = nextFavorited
         ? await supabase
             .from("favorites")
@@ -53,19 +57,15 @@ export function BookCardFavoriteButton({
             .eq("uid", uid)
             .eq("novel_id", novelIdValue)
 
-      // 如果添加或删除失败，显示错误 toast
       if (error) {
         console.error("Toggle favorite failed:", error)
         toast.error(t("favoriteError"))
         return
       }
 
-      // 设置收藏状态
       setIsFavorited(nextFavorited)
-      // 调用 onFavoriteChange 回调函数
       onFavoriteChange?.(nextFavorited)
     } finally {
-      // 设置正在提交状态为 false
       setIsPending(false)
     }
   }
