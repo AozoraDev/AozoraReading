@@ -49,6 +49,9 @@ export function NovelsTableRow({ book, copy }: NovelsTableRowProps) {
           />
         </div>
       </TableCell>
+      <TableCell className={styles.cellNovelId}>
+        <span className={styles.novelId}>{book.novel_id}</span>
+      </TableCell>
       <TableCell className={styles.cellDefault}>
         <TruncatedText text={book.title} className={styles.title} />
       </TableCell>

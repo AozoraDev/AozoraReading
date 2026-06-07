@@ -9,6 +9,13 @@ const supabaseHostname = process.env.NEXT_PUBLIC_SUPABASE_URL
   : undefined
 
 const nextConfig: NextConfig = {
+  experimental: {
+    // 章节 txt 上传最大 50 MB，需同步放宽 proxy 与 Server Action 请求体限制
+    proxyClientMaxBodySize: "50mb",
+    serverActions: {
+      bodySizeLimit: "50mb",
+    },
+  },
   // 允许优化 supabase 的图片
   images: {
     remotePatterns: supabaseHostname

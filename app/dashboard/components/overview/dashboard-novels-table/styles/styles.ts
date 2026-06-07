@@ -1,7 +1,7 @@
 export const dashboardNovelsTableStyles = {
   root: "space-y-6",
   card: [
-    "overflow-hidden rounded-xl border border-brand-blue-light/70 bg-card",
+    "overflow-x-auto rounded-xl border border-brand-blue-light/70 bg-card",
     "shadow-[0_8px_32px_rgba(0,89,187,0.06)] ring-1 ring-foreground/5",
   ].join(" "),
   headerRow: [
@@ -10,19 +10,22 @@ export const dashboardNovelsTableStyles = {
   ].join(" "),
   headBase:
     "h-11 px-4 text-xs font-semibold tracking-wide text-brand-blue uppercase",
-  headCover: "w-[76px] pl-4",
+  headCover: "w-[76px] shrink-0 pl-4",
+  headNovelId: "w-[1%] shrink-0 whitespace-nowrap px-2 sm:px-4",
   headAuthor: "hidden md:table-cell",
-  headActions: "w-28 text-right",
+  headActions: "w-28 shrink-0 text-right",
   bodyRow:
     "group border-brand-blue-light/30 transition-colors hover:bg-brand-blue-light/20",
-  cellCover: "py-3 pl-4",
+  cellCover: "shrink-0 py-3 pl-4",
   cellDefault: "px-4 py-3",
-  cellActions: "px-4 py-3 text-right",
+  cellNovelId: "w-[1%] shrink-0 whitespace-nowrap px-2 py-3 sm:px-4",
+  cellActions: "shrink-0 px-4 py-3 text-right",
   coverFrame: [
     "relative size-12 overflow-hidden rounded-md ring-1 ring-brand-blue-light/80",
     "transition-shadow group-hover:ring-brand-blue/30",
   ].join(" "),
   title: "font-medium text-brand-blue",
+  novelId: "inline-block font-mono text-sm text-muted-foreground tabular-nums",
   author: "text-muted-foreground",
   deleteButton: "gap-1.5",
   emptyRow: "hover:bg-transparent",

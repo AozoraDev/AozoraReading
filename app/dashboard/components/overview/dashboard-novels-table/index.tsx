@@ -28,6 +28,7 @@ export function DashboardNovelsTable({
 
   const copy: NovelsTableCopy = {
     cover: t("cover"),
+    novelId: t("novelId"),
     title: t("title"),
     author: t("author"),
     actions: t("actions"),

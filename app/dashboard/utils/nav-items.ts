@@ -1,9 +1,9 @@
-import { BookPlusIcon, LayoutDashboardIcon, type LucideIcon } from "lucide-react"
+import { BookPlusIcon, FilePlusIcon, LayoutDashboardIcon, type LucideIcon } from "lucide-react"
 
 /** 侧栏 / 移动端导航项；key 对应 dashboard.nav 文案 */
 export type DashboardNavItem = {
   href: string
-  key: "overview" | "addNovel"
+  key: "overview" | "addNovel" | "addChapter"
   icon: LucideIcon
 }
 
@@ -11,6 +11,7 @@ export type DashboardNavItem = {
 export const DASHBOARD_NAV_ITEMS: DashboardNavItem[] = [
   { href: "/dashboard", key: "overview", icon: LayoutDashboardIcon },
   { href: "/dashboard/add-novel", key: "addNovel", icon: BookPlusIcon },
+  { href: "/dashboard/add-chapter", key: "addChapter", icon: FilePlusIcon },
 ]
 
 /** 当前路由是否与导航 href 完全匹配 */

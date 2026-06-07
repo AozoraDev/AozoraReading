@@ -14,7 +14,7 @@ import {
 import type { BookInfo } from "@/lib/supabase/books/getBooksinfos"
 import { cn } from "@/lib/utils"
 
-const COLUMN_COUNT = 4
+const COLUMN_COUNT = 5
 
 type NovelsTableProps = {
   books: BookInfo[]
@@ -27,6 +27,9 @@ function NovelsTableHeader({ copy }: { copy: NovelsTableCopy }) {
       <TableRow className={styles.headerRow}>
         <TableHead className={styles.headCover}>
           <span className="sr-only">{copy.cover}</span>
+        </TableHead>
+        <TableHead className={cn(styles.headBase, styles.headNovelId)}>
+          {copy.novelId}
         </TableHead>
         <TableHead className={styles.headBase}>{copy.title}</TableHead>
         <TableHead className={cn(styles.headBase, styles.headAuthor)}>
