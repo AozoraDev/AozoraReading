@@ -50,15 +50,16 @@ export async function getFavoriteBooksPage({
 }: GetFavoriteBooksPageOptions): Promise<FavoriteBooksPageResult> {
   const supabase = await createClient()
 
+  // 读本地 session 即可；/favorites 入口已由 proxy 鉴权
   const {
-    data: { user },
-  } = await supabase.auth.getUser()
+    data: { session },
+  } = await supabase.auth.getSession()
 
-  // 未登录返回空结果
-  if (!user) {
+  if (!session?.user) {
     return { books: [], totalCount: 0, totalFavoriteCount: 0 }
   }
 
+  const user = session.user
   const trimmed = query.trim()
   const safePage = Math.max(1, page)
   const from = (safePage - 1) * pageSize

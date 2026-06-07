@@ -10,13 +10,16 @@ export async function getUserFavoriteNovelIds(
 
   const supabase = await createClient()
 
+  // 读本地 session 即可；/library 为公开页，未登录时直接返回空
   const {
-    data: { user },
-  } = await supabase.auth.getUser()
+    data: { session },
+  } = await supabase.auth.getSession()
 
-  if (!user) {
+  if (!session?.user) {
     return []
   }
+
+  const user = session.user
 
   const { data, error } = await supabase
     .from("favorites")

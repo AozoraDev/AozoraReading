@@ -8,8 +8,15 @@ import {
 } from "@/lib/supabase/auth/tool/constants"
 import { getSupabaseAnonKey, getSupabaseUrl } from "@/lib/supabase/env"
 
-// 更新会话
+// 受保护/管理路由：刷新会话并鉴权重定向
 export async function updateSession(request: NextRequest) {
+  const { pathname } = request.nextUrl
+
+  // 公开页无需鉴权，直接放行
+  if (!isAdminRoute(pathname) && !isProtectedRoute(pathname)) {
+    return NextResponse.next({ request })
+  }
+
   // 创建响应
   let supabaseResponse = NextResponse.next({ request })
 
@@ -41,9 +48,6 @@ export async function updateSession(request: NextRequest) {
   const {
     data: { user },
   } = await supabase.auth.getUser()
-
-  // 获取路径
-  const { pathname } = request.nextUrl
 
   // 如果为管理员路由
   if (isAdminRoute(pathname)) {
