@@ -13,6 +13,10 @@ export type BooksPageResult = {
   totalCount: number
 }
 
+export type BooksPageWithFavoritesResult = BooksPageResult & {
+  favoriteNovelIds: string[]
+}
+
 export type GetBooksPageOptions = {
   page: number
   pageSize?: number
@@ -59,8 +63,7 @@ export async function getNovelsCount(): Promise<number> {
   return count ?? 0
 }
 
-// 分页获取小说列表，可选搜索词
-// 根据页码、每页数量、搜索词获取小说列表
+// 分页获取小说列表，支持按标题/作者搜索
 export async function getBooksPage({
   page,
   pageSize = BOOKS_PAGE_SIZE,
@@ -91,5 +94,85 @@ export async function getBooksPage({
   return {
     books: mapNovelRows(data ?? []),
     totalCount: count ?? 0,
+  }
+}
+
+type NovelRowWithFavorites = {
+  id: string | number
+  title: string
+  author: string
+  cover_url: string
+  favorites?: { novel_id: number }[] | null
+}
+
+function mapFavoriteNovelIds(rows: NovelRowWithFavorites[]): string[] {
+  return rows
+    .filter((row) => (row.favorites?.length ?? 0) > 0)
+    .map((row) => String(row.id))
+}
+
+// 分页获取小说列表；已登录时联查 favorites，合并为一次查询
+export async function getBooksPageWithFavorites({
+  page,
+  pageSize = BOOKS_PAGE_SIZE,
+  query = "",
+}: GetBooksPageOptions): Promise<BooksPageWithFavoritesResult> {
+  const trimmed = query.trim()
+  const safePage = Math.max(1, page)
+  const from = (safePage - 1) * pageSize
+  const to = from + pageSize - 1
+
+  const supabase = await createClient()
+
+  const {
+    data: { session },
+  } = await supabase.auth.getSession()
+
+  if (session?.user) {
+    let builder = supabase
+      .from("novels")
+      .select("id, title, author, cover_url, favorites ( novel_id )", {
+        count: "exact",
+      })
+      .order("id", { ascending: true })
+
+    if (trimmed) {
+      builder = builder.or(buildIlikeOrFilter(["title", "author"], trimmed))
+    }
+
+    const { data, count, error } = await builder.range(from, to)
+
+    if (error) {
+      throw new Error(error.message)
+    }
+
+    const rows = data ?? []
+
+    return {
+      books: mapNovelRows(rows),
+      totalCount: count ?? 0,
+      favoriteNovelIds: mapFavoriteNovelIds(rows),
+    }
+  }
+
+  let builder = supabase
+    .from("novels")
+    .select("id, title, author, cover_url", { count: "exact" })
+    .order("id", { ascending: true })
+
+  if (trimmed) {
+    builder = builder.or(buildIlikeOrFilter(["title", "author"], trimmed))
+  }
+
+  const { data, count, error } = await builder.range(from, to)
+
+  if (error) {
+    throw new Error(error.message)
+  }
+
+  return {
+    books: mapNovelRows(data ?? []),
+    totalCount: count ?? 0,
+    favoriteNovelIds: [],
   }
 }
