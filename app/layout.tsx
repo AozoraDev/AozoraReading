@@ -1,8 +1,10 @@
+import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import { NextIntlClientProvider } from "next-intl"
 import { getLocale, getMessages } from "next-intl/server"
 
 import "./globals.css"
+import { getRootMetadata } from "@/lib/metadata"
 import { Footer } from "@/components/sections/footer"
 import { Navbar } from "@/components/sections/navbar"
 import { ThemeProvider } from "@/components/theme-provider"
@@ -15,6 +17,10 @@ const fontMono = Geist_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
 })
+
+export async function generateMetadata(): Promise<Metadata> {
+  return getRootMetadata()
+}
 
 export default async function RootLayout({
   children,

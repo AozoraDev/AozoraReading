@@ -1,10 +1,16 @@
 import { readFile } from "fs/promises"
 import path from "path"
+import type { Metadata } from "next"
 import { getLocale } from "next-intl/server"
 import ReactMarkdown from "react-markdown"
 
 import { Card, CardContent } from "@/components/ui/card"
 import type { Locale } from "@/i18n/config"
+import { getPageMetadata } from "@/lib/metadata"
+
+export async function generateMetadata(): Promise<Metadata> {
+  return getPageMetadata("howItWorks")
+}
 
 export default async function HowItWorksPage() {
   const locale = (await getLocale()) as Locale

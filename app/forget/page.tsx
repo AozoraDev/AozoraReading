@@ -1,4 +1,11 @@
+import type { Metadata } from "next"
+
 import { ForgetForm } from "@/app/forget/forget-form"
+import { getPageMetadata } from "@/lib/metadata"
+
+export async function generateMetadata(): Promise<Metadata> {
+  return getPageMetadata("forget")
+}
 
 export default function ForgetPage() {
   return (

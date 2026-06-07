@@ -1,9 +1,11 @@
 import { Library } from "lucide-react"
+import type { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
 
 import { BookGrid } from "@/components/sections/bookGrid"
 import { BookSearch } from "@/components/sections/bookSearch"
 import { SectionHeader } from "@/components/sections/sectionHeader"
+import { getPageMetadata } from "@/lib/metadata"
 import {
   getBooksinfos,
   getNovelsCount,
@@ -13,6 +15,10 @@ import { getUserFavoriteNovelIds } from "@/lib/supabase/favorites/getUserFavorit
 
 type LibraryPageProps = {
   searchParams: Promise<{ q?: string }>
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  return getPageMetadata("library")
 }
 
 export default async function LibraryPage({ searchParams }: LibraryPageProps) {
