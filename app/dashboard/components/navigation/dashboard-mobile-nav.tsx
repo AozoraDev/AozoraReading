@@ -10,11 +10,9 @@ export function DashboardMobileNav() {
   return (
     <nav
       aria-label={t("title")}
-      className="-mx-4 overflow-x-auto border-b border-border/80 bg-brand-blue-light px-4 pt-3 pb-3 sm:-mx-6 sm:px-6 md:hidden"
+      className="flex min-w-0 gap-1 overflow-x-auto border-b border-border/80 bg-brand-blue-light px-4 pt-3 pb-3 sm:px-6 md:hidden"
     >
-      <div className="flex w-max min-w-full gap-1">
-        <DashboardNavList variant="mobile" />
-      </div>
+      <DashboardNavList variant="mobile" />
     </nav>
   )
 }
