@@ -6,6 +6,7 @@ export type BookInfo = {
   title: string
   author: string
   cover_url: string
+  summary?: string | null
 }
 
 export type BooksPageResult = {
@@ -25,13 +26,20 @@ export type GetBooksPageOptions = {
 
 // 将数据库中的数据映射为 BookInfo 类型
 function mapNovelRows(
-  rows: { id: string | number; title: string; author: string; cover_url: string }[]
+  rows: {
+    id: string | number
+    title: string
+    author: string
+    cover_url: string
+    summary?: string | null
+  }[]
 ): BookInfo[] {
-  return rows.map(({ id, title, author, cover_url }) => ({
+  return rows.map(({ id, title, author, cover_url, summary }) => ({
     novel_id: String(id),
     title,
     author,
     cover_url,
+    ...(summary !== undefined ? { summary } : {}),
   }))
 }
 
@@ -46,6 +54,26 @@ export function buildIlikeOrFilter(columns: string[], query: string): string {
   const quotedPattern = `"${pattern.replace(/"/g, '\\"')}"`
 
   return columns.map((column) => `${column}.ilike.${quotedPattern}`).join(",")
+}
+
+export async function getNovelById(novelId: string): Promise<BookInfo | null> {
+  const supabase = await createClient()
+
+  const { data, error } = await supabase
+    .from("novels")
+    .select("id, title, author, cover_url, summary")
+    .eq("id", novelId)
+    .maybeSingle()
+
+  if (error) {
+    throw new Error(error.message)
+  }
+
+  if (!data) {
+    return null
+  }
+
+  return mapNovelRows([data])[0]
 }
 
 // 获取 novels 表中的书籍总数

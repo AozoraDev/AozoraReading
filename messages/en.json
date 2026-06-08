@@ -8,6 +8,7 @@
       "favorites": "Favorites",
       "dashboard": "Dashboard",
       "howItWorks": "How it works",
+      "reading": "Reading",
       "login": "Sign in",
       "signup": "Sign up",
       "forget": "Forgot password"
@@ -45,6 +46,18 @@
     "goToPage": "Go to page",
     "pagePlaceholder": "Page",
     "pageOf": "Page {current} of {total}"
+  },
+  "reading": {
+    "novelTitle": "Sample Novel Title",
+    "authorPlaceholder": "Author Name",
+    "summaryLabel": "Summary",
+    "summaryPlaceholder": "No summary available",
+    "chapterInfo": "Chapter {chapter} · {author}",
+    "prevChapter": "Previous",
+    "nextChapter": "Next",
+    "goToChapter": "Go to chapter",
+    "chapterPlaceholder": "Chapter",
+    "contentPlaceholder": "Chapter content will appear here. Select a novel from the library to start reading."
   },
   "bookCard": {
     "startReading": "Start Reading",

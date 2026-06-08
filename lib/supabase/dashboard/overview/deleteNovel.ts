@@ -20,26 +20,23 @@ function normalizeCoverStoragePath(coverUrl: string): string {
   }
 }
 
-// 用 service role 删除 Storage 中的封面文件
+// 用 service role 删除 Storage 中的封面文件（尽力而为：文件缺失不阻断删除）
 async function deleteCoverFile(coverUrl: string): Promise<void> {
   const coverPath = normalizeCoverStoragePath(coverUrl)
   if (!coverPath) return
 
   const adminClient = createServiceRoleClient()
-  const { data, error } = await adminClient.storage
+  const { error } = await adminClient.storage
     .from(COVER_BUCKET)
     .remove([coverPath])
 
+  // 文件不存在时 remove 会返回空数组而非报错，无需阻断；仅真实 API 错误才抛出
   if (error) {
     throw new Error(error.message)
   }
-
-  if (!data?.length) {
-    throw new Error(`Cover file not found or could not be deleted: ${coverPath}`)
-  }
 }
 
-/** 删除小说：章节 → 封面文件 → novels 记录 */
+/** 删除小说：章节 → 收藏 → 封面文件 → novels 记录 */
 export async function deleteNovel({
   novelId,
   coverUrl,
@@ -60,6 +57,16 @@ export async function deleteNovel({
 
   if (chaptersError) {
     throw new Error(chaptersError.message)
+  }
+
+  // 删除所有用户对该小说的收藏（用 service role 绕过 RLS，清掉全部用户的记录）
+  const { error: favoritesError } = await createServiceRoleClient()
+    .from("favorites")
+    .delete()
+    .eq("novel_id", novelIdValue)
+
+  if (favoritesError) {
+    throw new Error(favoritesError.message)
   }
 
   await deleteCoverFile(coverUrl)
