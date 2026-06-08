@@ -10,6 +10,7 @@ import {
   CardFooter,
   CardTitle,
 } from "@/components/ui/card"
+import { getReadingHref } from "@/lib/supabase/books/constants"
 import { getCoverUrl } from "@/lib/supabase/books/getcover"
 import { cn } from "@/lib/utils"
 
@@ -78,7 +79,7 @@ export function BookCard({
             className="shrink-0 px-4 hover:border-brand-green hover:bg-brand-green hover:text-brand-blue"
             asChild
           >
-            <Link href="#">{startReadingLabel}</Link>
+            <Link href={getReadingHref(novel_id)}>{startReadingLabel}</Link>
           </Button>
           <BookCardFavoriteButton
             novelId={novel_id}

@@ -69,11 +69,12 @@ export async function addChapters({ novelId, chapters }: AddChaptersInput): Prom
     throw new Error("novelNotFound")
   }
 
-  const rows: ChapterRow[] = chapters.map((chapter) => ({
+  // chapter_no 直接取 json 中的位置序号 + 1，保证每章都有连续序号（不再从标题解析）
+  const rows: ChapterRow[] = chapters.map((chapter, index) => ({
     novel_id: novelId,
     title: chapter.title,
     content: chapter.content,
-    ...(chapter.chapter_no !== undefined ? { chapter_no: chapter.chapter_no } : {}),
+    chapter_no: index + 1,
   }))
 
   for (const batch of chunkChapterRows(rows)) {

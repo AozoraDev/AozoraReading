@@ -38,7 +38,8 @@ export async function deleteNovelAction(
     await deleteNovel({ novelId, coverUrl })
     revalidatePath("/dashboard")
     return { success: true, message: t("deleteSuccess") }
-  } catch {
+  } catch (error) {
+    console.error("[deleteNovelAction] failed", { novelId, coverUrl, error })
     return { success: false, message: t("deleteError") }
   }
 }

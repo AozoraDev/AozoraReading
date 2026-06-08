@@ -8,6 +8,7 @@
       "favorites": "收藏",
       "dashboard": "仪表盘",
       "howItWorks": "工作原理",
+      "reading": "阅读",
       "login": "登录",
       "signup": "注册",
       "forget": "忘记密码"
@@ -45,6 +46,18 @@
     "goToPage": "跳转到页码",
     "pagePlaceholder": "页码",
     "pageOf": "第 {current} / {total} 页"
+  },
+  "reading": {
+    "novelTitle": "示例小说标题",
+    "authorPlaceholder": "作者名",
+    "summaryLabel": "简介",
+    "summaryPlaceholder": "暂无简介",
+    "chapterInfo": "第 {chapter} 章 · {author}",
+    "prevChapter": "上一章",
+    "nextChapter": "下一章",
+    "goToChapter": "跳转到章节",
+    "chapterPlaceholder": "章节",
+    "contentPlaceholder": "章节正文将显示在此处。请从书城选择小说开始阅读。"
   },
   "bookCard": {
     "startReading": "开始阅读",

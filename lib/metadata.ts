@@ -18,6 +18,7 @@ type PageMetadataKey =
   | "favorites"
   | "dashboard"
   | "howItWorks"
+  | "reading"
   | "login"
   | "signup"
   | "forget"
