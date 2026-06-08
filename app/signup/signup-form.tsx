@@ -3,7 +3,7 @@
 import Link from "next/link"
 
 import { CredentialFields } from "@/app/signup/components/credential-fields"
-import { OtpVerificationFields } from "@/app/signup/components/otp-verification-fields"
+import { OtpVerificationFields } from "@/components/auth/otp-verification-fields"
 import { SignupHeader } from "@/app/signup/components/signup-header"
 import { useSignupForm } from "@/app/signup/hook/use-signup-form"
 import { Button } from "@/components/ui/button"
@@ -49,6 +49,7 @@ export function SignupForm() {
               isVerifying={form.isVerifying}
               onVerify={form.verify}
               t={form.t}
+              messagePrefix="signUp"
             />
           ) : null}
 

@@ -6,9 +6,9 @@
  *
  * @example
  * ```ts
- * import { splitTxtFileToJson } from "@/app/dashboard/add-chapter/script/split-txt-chapters"
+ * import { splitTxtContent } from "@/app/dashboard/add-chapter/script/split-txt-chapters"
  *
- * const json = await splitTxtFileToJson(file)
+ * const { chapters } = splitTxtContent(rawText)
  * // [{ "title": "第一章 开端", "chapter_no": 1, "content": "..." }, ...]
  * ```
  */
@@ -344,37 +344,4 @@ export function splitTxtContent(
     chapters,
     fallbackUsed: false,
   }
-}
-
-/** 将 chapters 数组序列化为 JSON 字符串（可直接 console.log 或传给 API） */
-export function splitTxtContentToJson(
-  rawText: string,
-  options?: SplitTxtChaptersOptions,
-  pretty = true,
-): string {
-  const result = splitTxtContent(rawText, options)
-  return JSON.stringify(result.chapters, null, pretty ? 2 : undefined)
-}
-
-/**
- * 从浏览器 File / Blob 读取并切分。
- * 会先读取二进制并按 `encoding` 解码（默认自动识别 UTF-8 / GBK），再切分章节。
- */
-export async function splitTxtFile(
-  file: File | Blob,
-  options?: SplitTxtChaptersOptions,
-): Promise<SplitTxtChaptersResult> {
-  const bytes = await file.arrayBuffer()
-  const text = decodeTxtBytes(bytes, options)
-  return splitTxtContent(text, options)
-}
-
-/** 从 File 直接得到 JSON 字符串 */
-export async function splitTxtFileToJson(
-  file: File | Blob,
-  options?: SplitTxtChaptersOptions,
-  pretty = true,
-): Promise<string> {
-  const result = await splitTxtFile(file, options)
-  return JSON.stringify(result.chapters, null, pretty ? 2 : undefined)
 }

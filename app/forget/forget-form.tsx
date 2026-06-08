@@ -3,7 +3,7 @@
 import Image from "next/image"
 import Link from "next/link"
 
-import { OtpVerificationFields } from "@/app/forget/components/otp-verification-fields"
+import { OtpVerificationFields } from "@/components/auth/otp-verification-fields"
 import { useForgetForm } from "@/app/forget/hook/use-forget-form"
 import { CredentialFields } from "@/app/signup/components/credential-fields"
 import { Button } from "@/components/ui/button"
@@ -71,6 +71,8 @@ export function ForgetForm() {
               isVerifying={form.isVerifying}
               onVerify={form.verify}
               t={form.t}
+              messagePrefix="forget"
+              otpRequired
             />
           ) : null}
 

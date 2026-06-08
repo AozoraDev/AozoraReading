@@ -2,12 +2,10 @@
 
 import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
-import { useState } from "react"
 
 import { buildTextPageHref } from "@/app/text/utils/build-text-href"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { JumpNumberForm } from "@/components/sections/bookGrid/components/jump-number-form"
+import { bookGridStyles } from "@/components/sections/bookGrid/styles/styles"
 import {
   Pagination,
   PaginationContent,
@@ -15,8 +13,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination"
-import { Separator } from "@/components/ui/separator"
-
+import { cn } from "@/lib/utils"
 type TextChapterNavProps = {
   novelId: string
   chapterNo: number
@@ -35,7 +32,6 @@ export function TextChapterNav({
   const router = useRouter()
   const t = useTranslations("reading")
   const tPagination = useTranslations("pagination")
-  const [jumpInput, setJumpInput] = useState(String(chapterNo))
 
   function goToChapter(targetChapterNo: number) {
     const nextChapter = Math.min(Math.max(1, targetChapterNo), totalChapters)
@@ -47,73 +43,80 @@ export function TextChapterNav({
     router.push(buildTextPageHref(novelId, nextChapter))
   }
 
-  function handleJumpSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-
-    const value = Number.parseInt(jumpInput, 10)
-    if (Number.isNaN(value)) {
-      return
-    }
-
-    goToChapter(value)
-  }
+  const chapterProgress =
+    totalChapters > 0 ? (chapterNo / totalChapters) * 100 : 0
+  const chapterPositionLabel = t("chapterOf", {
+    current: chapterNo,
+    total: totalChapters,
+  })
 
   return (
-    <div className="space-y-6">
-      <Separator />
-      <Pagination className="mx-0 w-full">
-        <PaginationContent className="w-full flex-col gap-4 sm:flex-row sm:justify-between">
-          <PaginationItem className="w-full sm:w-auto">
-            <PaginationPrevious
-              aria-label={t("prevChapter")}
-              disabled={!prevChapterNo}
-              onClick={() =>
-                prevChapterNo && goToChapter(prevChapterNo)
-              }
-              className="w-full sm:w-auto"
-            >
-              {t("prevChapter")}
-            </PaginationPrevious>
-          </PaginationItem>
+    <nav aria-label={t("goToChapter")} className={bookGridStyles.paginationNav}>
+      <div className="flex flex-col items-center gap-4">
+        <div className="flex w-full flex-col items-center gap-2">
+          <p className="text-sm font-medium tracking-wide text-brand-blue">
+            {chapterPositionLabel}
+          </p>
+          <div
+            className="h-1.5 w-full max-w-xs overflow-hidden rounded-full bg-brand-blue/10"
+            role="progressbar"
+            aria-valuenow={chapterNo}
+            aria-valuemin={1}
+            aria-valuemax={totalChapters}
+            aria-label={chapterPositionLabel}
+          >
+            <div
+              className="h-full rounded-full bg-brand-blue transition-all duration-300"
+              style={{ width: `${chapterProgress}%` }}
+            />
+          </div>
+        </div>
 
-          <PaginationItem>
-            <form
-              onSubmit={handleJumpSubmit}
-              className="flex items-center gap-2"
-            >
-              <Label htmlFor="text-chapter-jump" className="shrink-0">
-                {t("goToChapter")}
-              </Label>
-              <Input
-                id="text-chapter-jump"
-                type="number"
-                min={1}
-                max={totalChapters}
-                value={jumpInput}
-                onChange={(event) => setJumpInput(event.target.value)}
-                placeholder={t("chapterPlaceholder")}
-                className="h-8 w-20"
-              />
-              <Button type="submit" size="sm">
-                {tPagination("go")}
-              </Button>
-            </form>
-          </PaginationItem>
+        <div className="flex w-full flex-col items-center gap-4 lg:flex-row lg:justify-between">
+          <Pagination className="mx-0 w-auto">
+            <PaginationContent className="gap-1">
+              <PaginationItem>
+                <PaginationPrevious
+                  aria-label={t("prevChapter")}
+                  disabled={!prevChapterNo}
+                  onClick={() => prevChapterNo && goToChapter(prevChapterNo)}
+                  className={cn(
+                    bookGridStyles.paginationArrowButton,
+                    "[&_span]:block"
+                  )}
+                >
+                  {t("prevChapter")}
+                </PaginationPrevious>
+              </PaginationItem>
 
-          <PaginationItem className="w-full sm:w-auto">
-            <PaginationNext
-              aria-label={t("nextChapter")}
-              disabled={!nextChapterNo}
-              onClick={() =>
-                nextChapterNo && goToChapter(nextChapterNo)
-              }
-              className="w-full sm:w-auto"
-            >
-              {t("nextChapter")}
-            </PaginationNext>
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
-    </div>
+              <PaginationItem>
+                <PaginationNext
+                  aria-label={t("nextChapter")}
+                  disabled={!nextChapterNo}
+                  onClick={() => nextChapterNo && goToChapter(nextChapterNo)}
+                  className={cn(
+                    bookGridStyles.paginationArrowButton,
+                    "[&_span]:block"
+                  )}
+                >
+                  {t("nextChapter")}
+                </PaginationNext>
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
+
+          <JumpNumberForm
+            key={chapterNo}
+            id="text-chapter-jump"
+            current={chapterNo}
+            max={totalChapters}
+            label={t("goToChapter")}
+            placeholder={t("chapterPlaceholder")}
+            submitLabel={tPagination("go")}
+            onJump={goToChapter}
+          />
+        </div>
+      </div>
+    </nav>
   )
 }

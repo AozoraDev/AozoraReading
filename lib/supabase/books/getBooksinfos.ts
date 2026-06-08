@@ -7,6 +7,17 @@ export type BookInfo = {
   author: string
   cover_url: string
   summary?: string | null
+  tags?: string[]
+}
+
+export function parseNovelTags(tags: unknown): string[] {
+  if (!Array.isArray(tags)) {
+    return []
+  }
+
+  return tags.filter(
+    (tag): tag is string => typeof tag === "string" && tag.trim() !== "",
+  )
 }
 
 export type BooksPageResult = {
@@ -32,14 +43,16 @@ function mapNovelRows(
     author: string
     cover_url: string
     summary?: string | null
+    tags?: unknown
   }[]
 ): BookInfo[] {
-  return rows.map(({ id, title, author, cover_url, summary }) => ({
+  return rows.map(({ id, title, author, cover_url, summary, tags }) => ({
     novel_id: String(id),
     title,
     author,
     cover_url,
     ...(summary !== undefined ? { summary } : {}),
+    ...(tags !== undefined ? { tags: parseNovelTags(tags) } : {}),
   }))
 }
 
@@ -61,7 +74,7 @@ export async function getNovelById(novelId: string): Promise<BookInfo | null> {
 
   const { data, error } = await supabase
     .from("novels")
-    .select("id, title, author, cover_url, summary")
+    .select("id, title, author, cover_url, summary, tags")
     .eq("id", novelId)
     .maybeSingle()
 
@@ -106,7 +119,7 @@ export async function getBooksPage({
 
   let builder = supabase
     .from("novels")
-    .select("id, title, author, cover_url", { count: "exact" })
+    .select("id, title, author, cover_url, tags", { count: "exact" })
     .order("id", { ascending: true })
 
   if (trimmed) {
@@ -159,7 +172,7 @@ export async function getBooksPageWithFavorites({
   if (session?.user) {
     let builder = supabase
       .from("novels")
-      .select("id, title, author, cover_url, favorites ( novel_id )", {
+      .select("id, title, author, cover_url, tags, favorites ( novel_id )", {
         count: "exact",
       })
       .order("id", { ascending: true })
@@ -185,7 +198,7 @@ export async function getBooksPageWithFavorites({
 
   let builder = supabase
     .from("novels")
-    .select("id, title, author, cover_url", { count: "exact" })
+    .select("id, title, author, cover_url, tags", { count: "exact" })
     .order("id", { ascending: true })
 
   if (trimmed) {

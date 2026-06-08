@@ -2,6 +2,7 @@ import Image from "next/image"
 import Link from "next/link"
 
 import { BookCardFavoriteButton } from "@/components/sections/bookCard/bookCardFavoriteButton"
+import { BookCountBadge } from "@/components/sections/bookCountBadge"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -19,6 +20,7 @@ export type BookCardProps = {
   cover_url: string
   title: string
   author: string
+  tags?: string[]
   startReadingLabel: string
   favoriteLabel: string
   isFavorited?: boolean
@@ -31,6 +33,7 @@ export function BookCard({
   cover_url,
   title,
   author,
+  tags = [],
   startReadingLabel,
   favoriteLabel,
   isFavorited = false,
@@ -70,6 +73,13 @@ export function BookCard({
           <CardDescription className="line-clamp-1 text-foreground">
             {author}
           </CardDescription>
+          {tags.length > 0 ? (
+            <div className="flex flex-wrap gap-1.5 pt-0.5">
+              {tags.map((tag, index) => (
+                <BookCountBadge key={`${tag}-${index}`}>{tag}</BookCountBadge>
+              ))}
+            </div>
+          ) : null}
         </div>
 
         <CardFooter className="mt-3 w-full justify-between gap-2 border-t-0 bg-transparent p-0">

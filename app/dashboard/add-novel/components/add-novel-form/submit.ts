@@ -5,6 +5,8 @@ export async function submitAddNovel(payload: AddNovelSubmitPayload): Promise<vo
   const formData = new FormData()
   formData.append("title", payload.title)
   formData.append("author", payload.author)
+  formData.append("summary", payload.summary)
+  formData.append("tags", payload.tags)
   formData.append("cover_url", payload.cover_url)
   formData.append("cover", payload.cover)
 

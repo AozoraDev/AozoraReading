@@ -51,9 +51,6 @@ export function ReadingChapterList({
                 asChild
               >
                 <Link href={buildTextPageHref(novelId, chapter.chapter_no)}>
-                  <span className="shrink-0 tabular-nums font-semibold text-brand-blue">
-                    {chapter.chapter_no}
-                  </span>
                   <span className="min-w-0 truncate text-brand-blue">
                     {chapter.title}
                   </span>

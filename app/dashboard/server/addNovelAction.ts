@@ -3,21 +3,14 @@
 import { revalidatePath } from "next/cache"
 import { getTranslations } from "next-intl/server"
 
-import { addNovelFormSchema } from "@/app/dashboard/add-novel/schema"
+import {
+  ACCEPTED_IMAGE_TYPES,
+  addNovelFormSchema,
+  parseTagsInput,
+} from "@/app/dashboard/add-novel/schema"
 import { isAdminEmail } from "@/lib/supabase/auth/tool/constants"
 import { addNovel } from "@/lib/supabase/dashboard/add-novel/addNovel"
 import { createClient } from "@/lib/supabase/server"
-
-const ACCEPTED_IMAGE_TYPES = new Set([
-  "image/jpeg",
-  "image/png",
-  "image/webp",
-  "image/gif",
-  "image/bmp",
-  "image/svg+xml",
-  "image/avif",
-  "image/tiff",
-])
 
 export type AddNovelActionResult = {
   success: boolean
@@ -39,12 +32,14 @@ export async function addNovelAction(formData: FormData): Promise<AddNovelAction
 
   const title = String(formData.get("title") ?? "")
   const author = String(formData.get("author") ?? "")
+  const summary = String(formData.get("summary") ?? "")
+  const tags = String(formData.get("tags") ?? "")
   const coverUrl = String(formData.get("cover_url") ?? "")
   const cover = formData.get("cover")
 
   const textResult = addNovelFormSchema
-    .pick({ title: true, author: true, cover_url: true })
-    .safeParse({ title, author, cover_url: coverUrl })
+    .pick({ title: true, author: true, summary: true, tags: true, cover_url: true })
+    .safeParse({ title, author, summary, tags, cover_url: coverUrl })
 
   if (!textResult.success) {
     const messageKey = getTextFieldValidationMessage(textResult.error)
@@ -75,6 +70,8 @@ export async function addNovelAction(formData: FormData): Promise<AddNovelAction
     await addNovel({
       title: textResult.data.title,
       author: textResult.data.author,
+      summary: textResult.data.summary,
+      tags: parseTagsInput(textResult.data.tags),
       coverUrl: textResult.data.cover_url,
       coverFile: cover,
       coverContentType: cover.type,
