@@ -1,6 +1,10 @@
 import { BOOKS_PAGE_SIZE } from "@/lib/supabase/books/constants"
-import { buildIlikeOrFilter } from "@/lib/supabase/books/getBooksinfos"
-import type { BookInfo, BooksPageResult } from "@/lib/supabase/books/getBooksinfos"
+import {
+  buildIlikeOrFilter,
+  parseNovelTags,
+  type BookInfo,
+  type BooksPageResult,
+} from "@/lib/supabase/books/getBooksinfos"
 import { createClient } from "@/lib/supabase/server"
 
 export type FavoriteBooksPageResult = BooksPageResult & {
@@ -18,6 +22,7 @@ type NovelDetails = {
   title: string
   author: string
   cover_url: string
+  tags?: unknown
 }
 
 // 把收藏联表查询结果转成 BookInfo 列表
@@ -37,6 +42,9 @@ function mapFavoriteRows(
         title: novel.title,
         author: novel.author,
         cover_url: novel.cover_url,
+        ...(novel.tags !== undefined
+          ? { tags: parseNovelTags(novel.tags) }
+          : {}),
       },
     ]
   })
@@ -74,7 +82,8 @@ export async function getFavoriteBooksPage({
           id,
           title,
           author,
-          cover_url
+          cover_url,
+          tags
         )
       `,
       { count: "exact" }

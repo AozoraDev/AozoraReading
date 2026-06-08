@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-const ACCEPTED_IMAGE_TYPES = new Set([
+export const ACCEPTED_IMAGE_TYPES = new Set([
   "image/jpeg",
   "image/png",
   "image/webp",
@@ -13,9 +13,18 @@ const ACCEPTED_IMAGE_TYPES = new Set([
 
 const COVER_STORAGE_PATH_PATTERN = /^cover\/.+/
 
+export function parseTagsInput(input: string): string[] {
+  return input
+    .split(/[,，]/)
+    .map((tag) => tag.trim())
+    .filter((tag) => tag.length > 0)
+}
+
 export const addNovelFormSchema = z.object({
   title: z.string().trim().min(1, { message: "titleRequired" }),
   author: z.string().trim().min(1, { message: "authorRequired" }),
+  summary: z.string().trim(),
+  tags: z.string().trim(),
   cover_url: z
     .string()
     .trim()
@@ -35,6 +44,8 @@ export type AddNovelFormValues = z.infer<typeof addNovelFormSchema>
 export type AddNovelSubmitPayload = {
   title: string
   author: string
+  summary: string
+  tags: string
   cover_url: string
   cover: File
 }
@@ -48,6 +59,8 @@ export function toAddNovelSubmitPayload(values: AddNovelFormValues): AddNovelSub
   return {
     title: values.title,
     author: values.author,
+    summary: values.summary,
+    tags: values.tags,
     cover_url: values.cover_url,
     cover: coverFile,
   }

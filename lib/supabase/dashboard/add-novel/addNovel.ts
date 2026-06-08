@@ -6,6 +6,8 @@ const COVER_BUCKET = "cover"
 export type AddNovelInput = {
   title: string
   author: string
+  summary: string
+  tags: string[]
   coverUrl: string
   coverFile: Blob
   coverContentType: string
@@ -56,6 +58,8 @@ async function removeCoverFile(coverUrl: string): Promise<void> {
 export async function addNovel({
   title,
   author,
+  summary,
+  tags,
   coverUrl,
   coverFile,
   coverContentType,
@@ -66,6 +70,8 @@ export async function addNovel({
   const { error } = await supabase.from("novels").insert({
     title,
     author,
+    summary: summary || null,
+    tags: tags.length > 0 ? tags : null,
     cover_url: coverUrl,
   })
 

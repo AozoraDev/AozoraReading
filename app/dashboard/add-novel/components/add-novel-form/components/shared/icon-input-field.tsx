@@ -1,4 +1,5 @@
 import type { LucideIcon } from "lucide-react"
+import type { ReactNode } from "react"
 import type { UseFormRegisterReturn } from "react-hook-form"
 
 import { FormField } from "@/app/signup/components/form-field"
@@ -15,7 +16,7 @@ type IconInputFieldProps = {
   placeholder: string
   icon: LucideIcon
   error?: string
-  hint?: string
+  hint?: ReactNode
   /** register("fieldName") 的返回值，用于绑定字段 */
   registration: UseFormRegisterReturn
 }

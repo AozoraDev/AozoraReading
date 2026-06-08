@@ -21,6 +21,8 @@ import { Separator } from "@/components/ui/separator"
 const VALIDATION_FIELD_ORDER: (keyof AddNovelFormValues)[] = [
   "title",
   "author",
+  "summary",
+  "tags",
   "cover_url",
   "cover",
 ]
@@ -51,6 +53,8 @@ export function AddNovelForm() {
     defaultValues: {
       title: "",
       author: "",
+      summary: "",
+      tags: "",
       cover_url: "",
       cover: undefined,
     },

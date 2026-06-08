@@ -1,6 +1,7 @@
 import { BookOpen } from "lucide-react"
 import Image from "next/image"
 
+import { BookCountBadge } from "@/components/sections/bookCountBadge"
 import {
   Card,
   CardDescription,
@@ -25,9 +26,11 @@ export function ReadingNovelCard({
   summary,
   summaryLabel,
 }: ReadingNovelCardProps) {
+  const tags = novel?.tags ?? []
+
   return (
     <Card className="bg-muted shadow-none ring-0">
-      <CardHeader className="flex h-30 min-w-0 flex-row items-center gap-4 overflow-hidden py-0">
+      <CardHeader className="flex min-w-0 flex-wrap items-start gap-x-4 gap-y-3 py-0 sm:flex-nowrap sm:gap-4">
         <div className="shrink-0">
           {novel ? (
             <Image
@@ -48,20 +51,27 @@ export function ReadingNovelCard({
           )}
         </div>
 
-        <div className="flex min-w-0 shrink-0 flex-col justify-center space-y-1">
+        <div className="flex min-w-0 flex-1 flex-col justify-center space-y-1 sm:shrink-0 sm:flex-none">
           <CardTitle className="line-clamp-2 text-xl font-semibold text-brand-blue sm:text-2xl">
             {title}
           </CardTitle>
           <CardDescription className="text-sm sm:text-base">
             {author}
           </CardDescription>
+          {tags.length > 0 ? (
+            <div className="flex flex-wrap gap-1.5 pt-0.5">
+              {tags.map((tag, index) => (
+                <BookCountBadge key={`${tag}-${index}`}>{tag}</BookCountBadge>
+              ))}
+            </div>
+          ) : null}
         </div>
 
-        <div className="ml-6 min-w-0 flex-1 space-y-1 overflow-hidden sm:ml-10 sm:max-w-md">
+        <div className="min-w-0 basis-full space-y-1 pr-2 sm:ml-10 sm:basis-auto sm:flex-1">
           <p className="text-lg font-semibold text-brand-blue sm:text-xl">
             {summaryLabel}
           </p>
-          <p className="line-clamp-3 indent-[2em] wrap-break-word text-sm text-brand-blue sm:text-base">
+          <p className="indent-[2em] wrap-break-word text-sm text-brand-blue sm:text-base">
             {summary}
           </p>
         </div>

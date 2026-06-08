@@ -1,12 +1,10 @@
 "use client"
 
 import { useTranslations } from "next-intl"
-import { useState } from "react"
 
+import { JumpNumberForm } from "@/components/sections/bookGrid/components/jump-number-form"
 import { bookGridStyles } from "@/components/sections/bookGrid/styles/styles"
 import type { PageToken } from "@/components/sections/bookGrid/utils/get-pagination-range"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import {
   Pagination,
   PaginationContent,
@@ -17,59 +15,6 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination"
 import { cn } from "@/lib/utils"
-
-type JumpToPageFormProps = {
-  effectivePage: number
-  totalPages: number
-  onGoToPage: (page: number) => void
-}
-
-function JumpToPageForm({
-  effectivePage,
-  totalPages,
-  onGoToPage,
-}: JumpToPageFormProps) {
-  const t = useTranslations("pagination")
-  const [jumpInput, setJumpInput] = useState(String(effectivePage))
-
-  function handleJumpSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-
-    const page = Number.parseInt(jumpInput, 10)
-    if (Number.isNaN(page)) {
-      return
-    }
-
-    onGoToPage(page)
-  }
-
-  return (
-    <form
-      onSubmit={handleJumpSubmit}
-      className={bookGridStyles.paginationJumpForm}
-    >
-      <label
-        htmlFor="book-grid-page"
-        className="text-xs font-medium whitespace-nowrap text-brand-blue/80"
-      >
-        {t("goToPage")}
-      </label>
-      <Input
-        id="book-grid-page"
-        type="number"
-        min={1}
-        max={totalPages}
-        value={jumpInput}
-        onChange={(event) => setJumpInput(event.target.value)}
-        placeholder={t("pagePlaceholder")}
-        className={bookGridStyles.paginationJumpInput}
-      />
-      <Button type="submit" variant="brand" size="sm" className="h-7 px-3">
-        {t("go")}
-      </Button>
-    </form>
-  )
-}
 
 type BookGridPaginationProps = {
   effectivePage: number
@@ -147,11 +92,15 @@ export function BookGridPagination({
             </PaginationContent>
           </Pagination>
 
-          <JumpToPageForm
+          <JumpNumberForm
             key={effectivePage}
-            effectivePage={effectivePage}
-            totalPages={totalPages}
-            onGoToPage={onGoToPage}
+            id="book-grid-page"
+            current={effectivePage}
+            max={totalPages}
+            label={t("goToPage")}
+            placeholder={t("pagePlaceholder")}
+            submitLabel={t("go")}
+            onJump={onGoToPage}
           />
         </div>
       </div>
