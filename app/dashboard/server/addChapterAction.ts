@@ -130,6 +130,7 @@ export async function addChapterAction(input: AddChapterInput): Promise<AddChapt
       return { success: false, message: t("novelNotFound") }
     }
 
+    console.error("[addChapterAction] failed", error)
     return { success: false, message: t("submitError") }
   } finally {
     try {
