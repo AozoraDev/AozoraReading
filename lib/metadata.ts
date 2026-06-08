@@ -22,6 +22,7 @@ type PageMetadataKey =
   | "login"
   | "signup"
   | "forget"
+  | "llmSettings"
 
 export async function getPageMetadata(page: PageMetadataKey): Promise<Metadata> {
   const t = await getTranslations("metadata")
