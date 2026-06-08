@@ -4,6 +4,7 @@ export const navItemKeys = [
   { href: "/", key: "home" },
   { href: "/library", key: "library" },
   { href: "/favorites", key: "favorites", requiresAuth: true },
+  { href: "/llm-settings", key: "llmSettings", requiresAuth: true },
   { href: "/dashboard", key: "dashboard", requiresAdmin: true },
 ] as const
 

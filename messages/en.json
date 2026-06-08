@@ -11,13 +11,15 @@
       "reading": "Reading",
       "login": "Sign in",
       "signup": "Sign up",
-      "forget": "Forgot password"
+      "forget": "Forgot password",
+      "llmSettings": "Model settings"
     }
   },
   "nav": {
     "home": "Home",
     "library": "Library",
     "favorites": "Favorites",
+    "llmSettings": "Model settings",
     "dashboard": "Dashboard",
     "login": "Login",
     "logout": "Sign out",
@@ -58,7 +60,18 @@
     "goToChapter": "Go to chapter",
     "chapterOf": "Chapter {current} of {total}",
     "chapterPlaceholder": "Chapter",
-    "contentPlaceholder": "Chapter content will appear here. Select a novel from the library to start reading."
+    "contentPlaceholder": "Chapter content will appear here. Select a novel from the library to start reading.",
+    "aiRecap": "AI Recap",
+    "aiChapterSummary": "AI Chapter Summary",
+    "recapLoading": "Generating the recap…",
+    "recapMissingSettings": "Please configure your LLM API key in LLM Settings first.",
+    "recapUnauthorized": "Please sign in to use AI features.",
+    "recapUnavailable": "There is no previous chapter to recap.",
+    "recapGenerateFailed": "Failed to generate the recap. Please try again later.",
+    "recapTimeout": "The AI request timed out. Please try again later.",
+    "summaryLoading": "Generating the chapter summary…",
+    "summaryUnavailable": "There is no chapter content to summarize.",
+    "summaryGenerateFailed": "Failed to generate the chapter summary. Please try again later."
   },
   "bookCard": {
     "startReading": "Start Reading",
@@ -77,6 +90,40 @@
     "searchButton": "Search",
     "subtitle": "Your saved novels, ready whenever you want to pick up where you left off.",
     "bookCount": "{count} books"
+  },
+  "llmSettings": {
+    "title": "Model settings",
+    "description": "Configure base URL, API key, and model name for an OpenAI-compatible API.",
+    "sessionHint": "This tab only",
+    "form": {
+      "baseUrlLabel": "API base URL",
+      "baseUrlPlaceholder": "https://api.openai.com/v1",
+      "baseUrlHint": "Use the full base URL, usually ending with /v1.",
+      "modelLabel": "Model name",
+      "modelPlaceholder": "gpt-4o-mini",
+      "apiKeyLabel": "API key",
+      "apiKeyPlaceholder": "sk-...",
+      "showApiKey": "Show API key",
+      "hideApiKey": "Hide API key",
+      "save": "Save",
+      "saving": "Saving…",
+      "test": "Test connection",
+      "testing": "Testing…",
+      "saveSuccess": "Saved for this session",
+      "validationError": "Please check the form and try again",
+      "unauthorized": "Please sign in first",
+      "baseUrlRequired": "API base URL is required",
+      "baseUrlInvalid": "Please enter a valid URL",
+      "modelRequired": "Model name is required",
+      "apiKeyRequired": "API key is required",
+      "testSuccess": "Connection successful",
+      "testFailed": "Connection failed. Check URL, key, and model",
+      "testUnauthorized": "Authentication failed. Check your API key",
+      "testTimeout": "Connection timed out. Please try again",
+      "testNetworkError": "Could not reach the API. Check the URL or network",
+      "saveHint": "Run a successful connection test before saving",
+      "saveRequiresTest": "Run a successful connection test before saving"
+    }
   },
   "dashboard": {
     "nav": {
