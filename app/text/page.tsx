@@ -1,6 +1,8 @@
 import type { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
+import { Suspense } from "react"
 
+import { TextAiActions } from "@/app/text/components/text-ai-actions"
 import { TextChapterNav } from "@/app/text/components/text-chapter-nav"
 import { Card, CardContent } from "@/components/ui/card"
 import { getPageMetadata } from "@/lib/metadata"
@@ -61,6 +63,12 @@ export default async function TextPage({ searchParams }: TextPageProps) {
 
   return (
     <div className="py-8 sm:py-12">
+      <Suspense>
+        <TextAiActions
+          novelId={chapter && novel_id ? novel_id : undefined}
+          chapterNo={chapter && chapterNo ? chapterNo : undefined}
+        />
+      </Suspense>
       <Card className="bg-muted shadow-none ring-0">
         <CardContent className="space-y-6 px-6 py-6 sm:px-10 sm:py-8 md:px-14">
           <h1 className="text-center text-2xl font-semibold text-brand-blue sm:text-3xl">

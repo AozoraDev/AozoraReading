@@ -2,7 +2,7 @@
   "metadata": {
     "title": "AozoraReading",
     "titleTemplate": "%s | AozoraReading",
-    "description": "AI 自动生成角色关系图谱、世界观百科与作品简介，让阅读更轻松，理解更深入。",
+    "description": "支持智能 TXT 章节切分导入，阅读时可生成 AI 前情回顾与本章总结，让长篇阅读更轻松。",
     "pages": {
       "library": "书城",
       "favorites": "收藏",
@@ -11,13 +11,15 @@
       "reading": "阅读",
       "login": "登录",
       "signup": "注册",
-      "forget": "忘记密码"
+      "forget": "忘记密码",
+      "llmSettings": "模型设置"
     }
   },
   "nav": {
     "home": "首页",
     "library": "书城",
     "favorites": "收藏",
+    "llmSettings": "模型设置",
     "dashboard": "仪表盘",
     "login": "登录",
     "logout": "退出登录",
@@ -35,7 +37,7 @@
   "hero": {
     "titleHighlight": "更智能",
     "titleRest": "的小说阅读体验",
-    "description": "AI 自动生成角色关系图谱、世界观百科与作品简介，让阅读更轻松，理解更深入。",
+    "description": "支持智能 TXT 章节切分导入，阅读时可生成 AI 前情回顾与本章总结，让长篇阅读更轻松。",
     "exploreLibrary": "探索书城",
     "howItWorks": "工作原理"
   },
@@ -58,7 +60,18 @@
     "goToChapter": "跳转到章节",
     "chapterOf": "第 {current} / {total} 章",
     "chapterPlaceholder": "章节",
-    "contentPlaceholder": "章节正文将显示在此处。请从书城选择小说开始阅读。"
+    "contentPlaceholder": "章节正文将显示在此处。请从书城选择小说开始阅读。",
+    "aiRecap": "AI前情回顾",
+    "aiChapterSummary": "AI本章总结",
+    "recapLoading": "正在生成前情回顾…",
+    "recapMissingSettings": "请先在「LLM 设置」中配置 API Key。",
+    "recapUnauthorized": "请登录后再使用 AI 功能。",
+    "recapUnavailable": "暂无可回顾的上一章。",
+    "recapGenerateFailed": "前情回顾生成失败，请稍后再试。",
+    "recapTimeout": "AI 请求超时，请稍后再试。",
+    "summaryLoading": "正在生成本章总结…",
+    "summaryUnavailable": "暂无可总结的章节正文。",
+    "summaryGenerateFailed": "本章总结生成失败，请稍后再试。"
   },
   "bookCard": {
     "startReading": "开始阅读",
@@ -69,7 +82,7 @@
   "library": {
     "searchPlaceholder": "搜索书籍…",
     "searchButton": "搜索",
-    "subtitle": "浏览经 AI 整理的小说，发现你的下一本好书。",
+    "subtitle": "浏览书城中的小说，发现你的下一本好书。",
     "bookCount": "{count} 本书"
   },
   "favorites": {
@@ -77,6 +90,40 @@
     "searchButton": "搜索",
     "subtitle": "你收藏的小说，随时可以继续阅读。",
     "bookCount": "{count} 本书"
+  },
+  "llmSettings": {
+    "title": "模型设置",
+    "description": "配置 OpenAI 兼容 API 的地址、密钥与模型名称。",
+    "sessionHint": "仅本标签页有效",
+    "form": {
+      "baseUrlLabel": "API 地址",
+      "baseUrlPlaceholder": "https://api.openai.com/v1",
+      "baseUrlHint": "请填写完整 Base URL，通常以 /v1 结尾。",
+      "modelLabel": "模型名称",
+      "modelPlaceholder": "gpt-4o-mini",
+      "apiKeyLabel": "API Key",
+      "apiKeyPlaceholder": "sk-...",
+      "showApiKey": "显示 API Key",
+      "hideApiKey": "隐藏 API Key",
+      "save": "保存",
+      "saving": "保存中…",
+      "test": "测试连接",
+      "testing": "测试中…",
+      "saveSuccess": "已保存，本次访问有效",
+      "validationError": "请检查表单填写是否正确",
+      "unauthorized": "请先登录",
+      "baseUrlRequired": "请填写 API 地址",
+      "baseUrlInvalid": "请输入有效的 URL",
+      "modelRequired": "请填写模型名称",
+      "apiKeyRequired": "请填写 API Key",
+      "testSuccess": "连接成功",
+      "testFailed": "连接失败，请检查地址、密钥与模型",
+      "testUnauthorized": "认证失败，请检查 API Key",
+      "testTimeout": "连接超时，请稍后再试",
+      "testNetworkError": "无法连接到 API，请检查地址或网络",
+      "saveHint": "保存前请先测试连接并成功",
+      "saveRequiresTest": "请先测试连接成功后再保存"
+    }
   },
   "dashboard": {
     "nav": {
@@ -181,7 +228,7 @@
   },
   "startReading": {
     "title": "准备开始探索下一个精彩故事了吗？",
-    "description": "发现经过智能整理的小说内容，快速了解人物关系、世界观设定与剧情脉络，享受更轻松的阅读体验。",
+    "description": "导入并阅读你喜欢的小说，阅读时可借助 AI 快速回顾前情、把握本章要点。",
     "signup": "免费注册"
   },
   "footer": {

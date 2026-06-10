@@ -1,23 +1,24 @@
 # How It Works?
 
-Aozora Reading uses AI to organize novel content so you can quickly grasp character relationships, world-building, and plot threads before and during reading.
+Aozora Reading is an AI-assisted novel reading platform that helps you import, manage, and read long-form works more efficiently.
 
 ## 1. Import a Work
 
-After you import a novel, the system automatically detects chapter structure, main characters, and key settings.
+Upload a `.txt` file from the dashboard. The system splits the text by chapter titles (UTF-8 / GBK encoding and common title formats) and batch-writes chapters to the database.
 
-## 2. AI-Powered Analysis
+## 2. AI Reading Assist
 
-AI generates:
+While reading a chapter, configure your own LLM API to generate:
 
-- **Character relationship maps** — clarify how characters connect and interact
-- **World-building encyclopedia** — summarize locations, factions, and background lore
-- **Work summaries** — distill the main storyline and reading highlights
+- **Recap** — a brief recap of the previous chapter
+- **Chapter summary** — key points from the current chapter
+
+Results are cached in the database so you do not need to call the API again on repeat views.
 
 ## 3. Read with Ease
 
-While reading, you can reference these materials at any time—less flipping back, less memorizing, more focus on the story itself.
+Browse and search the library, jump between chapters, and use prev/next navigation to get where you want in the story.
 
-## 4. Save & Track Progress
+## 4. Save Favorites
 
-Sign in to favorite works, view reading progress on your dashboard, and pick up right where you left off.
+Sign in to favorite novels and find them quickly on the favorites page whenever you want to read.

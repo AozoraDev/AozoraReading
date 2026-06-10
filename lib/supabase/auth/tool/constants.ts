@@ -2,7 +2,7 @@
 export const ADMIN_EMAIL = "aozoradev@qq.com"
 
 // 定义受保护的路由
-export const PROTECTED_ROUTES = ["/favorites"] as const
+export const PROTECTED_ROUTES = ["/favorites", "/llm-settings"] as const
 
 // 定义管理员路由
 export const ADMIN_ROUTES = ["/dashboard"] as const
