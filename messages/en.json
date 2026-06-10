@@ -2,7 +2,7 @@
   "metadata": {
     "title": "AozoraReading",
     "titleTemplate": "%s | AozoraReading",
-    "description": "AI automatically generates character relationship maps, world-building encyclopedias, and work summaries to make reading easier and understanding deeper.",
+    "description": "Smart TXT chapter splitting for bulk import, plus AI recap and chapter summaries while reading — making long-form reading easier.",
     "pages": {
       "library": "Library",
       "favorites": "Favorites",
@@ -37,7 +37,7 @@
   "hero": {
     "titleHighlight": "Smarter",
     "titleRest": " novel reading",
-    "description": "AI automatically generates character relationship maps, world-building encyclopedias, and work summaries to make reading easier and understanding deeper.",
+    "description": "Smart TXT chapter splitting for bulk import, plus AI recap and chapter summaries while reading — making long-form reading easier.",
     "exploreLibrary": "Explore Library",
     "howItWorks": "How it works"
   },
@@ -82,13 +82,13 @@
   "library": {
     "searchPlaceholder": "Search books…",
     "searchButton": "Search",
-    "subtitle": "Browse AI-organized novels and find your next great read.",
+    "subtitle": "Browse novels in the library and find your next great read.",
     "bookCount": "{count} books"
   },
   "favorites": {
     "searchPlaceholder": "Search favorites…",
     "searchButton": "Search",
-    "subtitle": "Your saved novels, ready whenever you want to pick up where you left off.",
+    "subtitle": "Your saved novels, ready whenever you want to read.",
     "bookCount": "{count} books"
   },
   "llmSettings": {
@@ -228,7 +228,7 @@
   },
   "startReading": {
     "title": "Ready to discover your next great story?",
-    "description": "Discover intelligently organized novel content, quickly understand character relationships, world settings, and plot threads, and enjoy a more relaxed reading experience.",
+    "description": "Import and read the novels you love, with AI recap and chapter summaries to help you follow the story.",
     "signup": "Sign up free"
   },
   "footer": {
