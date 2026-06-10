@@ -6,11 +6,6 @@ import { useEffect, useRef, useState } from "react"
 import { toast } from "sonner"
 
 import { AiResultCard } from "@/app/text/components/ai-result-card"
-import {
-  getChapterRecapAction,
-  getChapterSummaryAction,
-  type ChapterRecapResult,
-} from "@/app/text/server/actions"
 import { Button } from "@/components/ui/button"
 import { loadLlmSettingsFromSession } from "@/lib/llm-settings/session-storage"
 import { useAuthUser } from "@/lib/supabase/auth/hook/use-auth-user"
@@ -29,7 +24,14 @@ export function TextAiActions(props: TextAiActionsProps) {
   return <TextAiActionsInner key={routeKey} {...props} />
 }
 
-/** 管理单个 AI 结果（回顾 / 总结）的加载态与内容，并作废过期请求 */
+type AiStreamRequest = {
+  type: "recap" | "summary"
+  novelId: string
+  chapterNo: number
+  settings: unknown
+}
+
+/** 管理单个 AI 结果（回顾 / 总结）的流式加载态与内容，并作废过期请求 */
 function useAiResult() {
   const [content, setContent] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
@@ -43,27 +45,61 @@ function useAiResult() {
   }, [])
 
   async function run(
-    action: () => Promise<ChapterRecapResult>,
+    body: AiStreamRequest,
     onError: (message?: string) => void,
   ) {
     const requestId = ++requestIdRef.current
     setIsLoading(true)
     setContent(null)
     try {
-      const result = await action()
+      const response = await fetch("/api/text/ai", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      })
+
       if (requestId !== requestIdRef.current) {
         return
       }
-      if (result.success) {
-        setContent(result.content)
-      } else {
-        onError(result.message)
+
+      if (!response.ok || !response.body) {
+        const data = (await response.json().catch(() => null)) as {
+          message?: string
+        } | null
+        if (requestId === requestIdRef.current) {
+          onError(data?.message)
+        }
+        return
+      }
+
+      const reader = response.body.getReader()
+      const decoder = new TextDecoder()
+      let accumulated = ""
+
+      // 边收边追加：每读到一段就拼接并刷新画面
+      while (true) {
+        const { done, value } = await reader.read()
+        if (done) {
+          break
+        }
+        if (requestId !== requestIdRef.current) {
+          void reader.cancel()
+          return
+        }
+        accumulated += decoder.decode(value, { stream: true })
+        setContent(accumulated)
+      }
+
+      if (
+        requestId === requestIdRef.current &&
+        accumulated.trim().length === 0
+      ) {
+        onError()
       }
     } catch {
-      if (requestId !== requestIdRef.current) {
-        return
+      if (requestId === requestIdRef.current) {
+        onError()
       }
-      onError()
     } finally {
       if (requestId === requestIdRef.current) {
         setIsLoading(false)
@@ -97,7 +133,7 @@ function TextAiActionsInner({ novelId, chapterNo }: TextAiActionsProps) {
     }
 
     recap.run(
-      () => getChapterRecapAction({ novelId, chapterNo, settings }),
+      { type: "recap", novelId, chapterNo, settings },
       (message) => toast.error(message ?? t("recapGenerateFailed")),
     )
   }
@@ -114,7 +150,7 @@ function TextAiActionsInner({ novelId, chapterNo }: TextAiActionsProps) {
     }
 
     summary.run(
-      () => getChapterSummaryAction({ novelId, chapterNo, settings }),
+      { type: "summary", novelId, chapterNo, settings },
       (message) => toast.error(message ?? t("summaryGenerateFailed")),
     )
   }

@@ -6,7 +6,7 @@
 
 **AI-powered novel reading platform**
 
-Automatically organizes chapter structure, generates character relationship graphs, world-building encyclopedias, and work summaries — making long-form reading easier and deeper to understand.
+Smart TXT chapter splitting for bulk import, plus AI recap and chapter summaries while reading — making long-form reading easier.
 
 <br />
 
@@ -52,7 +52,8 @@ Automatically organizes chapter structure, generates character relationship grap
 
 **📚 Reading Experience**
 - Browse and search the library
-- Chapter reading with progress and favorites
+- Chapter reading with navigation and favorites
+- AI recap and chapter summaries on the reading page
 - Chinese/English toggle, light/dark themes
 
 </td>
@@ -60,7 +61,7 @@ Automatically organizes chapter structure, generates character relationship grap
 
 **⚙️ Content Management**
 - Dashboard for managing novels
-- Upload covers, batch import `.txt` chapters
+- Upload covers, smart TXT splitting and batch chapter import
 - Email sign-up/login with OTP verification
 
 </td>

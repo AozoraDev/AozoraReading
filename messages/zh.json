@@ -2,7 +2,7 @@
   "metadata": {
     "title": "AozoraReading",
     "titleTemplate": "%s | AozoraReading",
-    "description": "AI 自动生成角色关系图谱、世界观百科与作品简介，让阅读更轻松，理解更深入。",
+    "description": "支持智能 TXT 章节切分导入，阅读时可生成 AI 前情回顾与本章总结，让长篇阅读更轻松。",
     "pages": {
       "library": "书城",
       "favorites": "收藏",
@@ -37,7 +37,7 @@
   "hero": {
     "titleHighlight": "更智能",
     "titleRest": "的小说阅读体验",
-    "description": "AI 自动生成角色关系图谱、世界观百科与作品简介，让阅读更轻松，理解更深入。",
+    "description": "支持智能 TXT 章节切分导入，阅读时可生成 AI 前情回顾与本章总结，让长篇阅读更轻松。",
     "exploreLibrary": "探索书城",
     "howItWorks": "工作原理"
   },
@@ -82,7 +82,7 @@
   "library": {
     "searchPlaceholder": "搜索书籍…",
     "searchButton": "搜索",
-    "subtitle": "浏览经 AI 整理的小说，发现你的下一本好书。",
+    "subtitle": "浏览书城中的小说，发现你的下一本好书。",
     "bookCount": "{count} 本书"
   },
   "favorites": {
@@ -228,7 +228,7 @@
   },
   "startReading": {
     "title": "准备开始探索下一个精彩故事了吗？",
-    "description": "发现经过智能整理的小说内容，快速了解人物关系、世界观设定与剧情脉络，享受更轻松的阅读体验。",
+    "description": "导入并阅读你喜欢的小说，阅读时可借助 AI 快速回顾前情、把握本章要点。",
     "signup": "免费注册"
   },
   "footer": {

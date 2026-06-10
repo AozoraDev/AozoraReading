@@ -29,16 +29,19 @@ export function AiResultCard({
       <CardContent className="space-y-3 px-6 py-5 sm:px-8">
         <h2 className="text-base font-semibold text-black sm:text-lg">{title}</h2>
 
-        {isLoading ? (
+        {content ? (
+          <p className="indent-[2em] whitespace-pre-wrap text-sm leading-relaxed text-black/90 sm:text-base">
+            {content}
+            {isLoading ? (
+              <span className="ml-0.5 inline-block animate-pulse">▍</span>
+            ) : null}
+          </p>
+        ) : isLoading ? (
           <div className="flex items-center gap-2 text-sm text-black/70">
             <Loader2 className="size-4 animate-spin" />
             <span>{loadingText}</span>
           </div>
-        ) : (
-          <p className="indent-[2em] whitespace-pre-wrap text-sm leading-relaxed text-black/90 sm:text-base">
-            {content}
-          </p>
-        )}
+        ) : null}
       </CardContent>
     </Card>
   )
